@@ -1,0 +1,494 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+using O365Launcher.TaskTrayApp.Model;
+using System.Net;
+using System.Data.SQLite;
+
+namespace O365Launcher.TaskTrayApp
+{
+    public partial class LauncherConfig : Form
+    {
+        LauncherProfile currentProfile;
+        BindingSource bs = new BindingSource();
+        LauncherAppContext launcherCtx;
+        public LauncherConfig()
+        {
+            InitializeComponent();
+        }
+
+        public LauncherProfile CurrentProfile
+        {
+            get
+            {
+                if(currentProfile == null)
+                {
+                    LoadProfile();
+                }
+                
+                return currentProfile;
+            }
+
+            
+        }
+        public LauncherAppContext LauncherCtx { get { return launcherCtx; } set { this.launcherCtx = value; } }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int size = -1;
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                string file = openFileDialog1.FileName;
+                lblImportFile.Text = "File selected: "+ file;
+                try
+                {
+                    string text = File.ReadAllText(file);
+                    size = text.Length;
+                }
+                catch (IOException)
+                {
+                }
+            }
+            Console.WriteLine(size); // <-- Shows file size in debugging mode.
+            Console.WriteLine(result); // <-- For debugging use.
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // If the file name is not an empty string open it for saving.  
+            if (saveFileDialog1.FileName != "")
+            {
+                // Saves the Image via a FileStream created by the OpenFile method.  
+                System.IO.FileStream fs =
+                   (System.IO.FileStream)saveFileDialog1.OpenFile();
+                // Saves the Image in the appropriate ImageFormat based upon the  
+                // File type selected in the dialog box.  
+                // NOTE that the FilterIndex property is one-based.  
+                switch (saveFileDialog1.FilterIndex)
+                {
+                    case 1:
+                        this.button2.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+
+                    case 2:
+                        this.button2.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+
+                    case 3:
+                        this.button2.Image.Save(fs,
+                           System.Drawing.Imaging.ImageFormat.Gif);
+                        break;
+                }
+
+                fs.Close();
+            }
+        }
+
+        private void LauncherConfig_Load(object sender, EventArgs e)
+        {
+            LoadProfile();
+        }
+
+        private void LoadProfile()
+        {
+            PopulateCheckedListBoxItems();
+            var currentConfig = TaskTrayApp.Properties.Settings.Default.Configuration;
+            if (string.IsNullOrEmpty(currentConfig))
+            {
+                currentProfile = new LauncherProfile();
+                SelectCheckedListBoxItems(null);
+            }
+            else
+            {
+                currentProfile = LauncherProfile.LoadFromXML(currentConfig);
+
+                listBoxTenants.DataSource = currentProfile.Tenants;
+                listBoxTenants.DisplayMember = "TenantFriendlyName";
+                listBoxTenants.ValueMember = "TenantPrefix";
+                
+                comboBoxTenants.DataSource = currentProfile.Tenants;
+                comboBoxTenants.DisplayMember = "TenantFriendlyName";
+                comboBoxTenants.ValueMember = "TenantPrefix";
+                comboBoxTenants.SelectedIndexChanged += new System.EventHandler(this.comboBoxTenants_SelectedIndexChanged);
+
+
+                TenantInfo currentTenant = currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString());
+
+                bs.DataSource = currentTenant.CustomLinks;
+                comboBoxCustomLinks.DataSource = bs;
+                comboBoxCustomLinks.DisplayMember = "Value";
+                comboBoxCustomLinks.ValueMember = "Key";
+
+                SelectCheckedListBoxItems(currentTenant);
+                #region
+                //int count = checkedListBoxBrowsers.Items.Count;
+                //for (int i = 0; i < count; i++)
+                //{
+                //    LauncherEnums.BrowserType browser;
+                //    Enum.TryParse(checkedListBoxBrowsers.Items[i].ToString(), out browser);
+                //    if (currentProfile.Browsers.Contains(browser))
+                //    {
+                //        checkedListBoxBrowsers.SetItemChecked(i, true);
+                //    }
+                //}
+                #endregion
+            }
+            LauncherCtx.BuildContextMenu();
+        }
+
+        private void PopulateCheckedListBoxItems()
+        {
+            PopulateCheckedListBoxItems(checkedListBoxBrowsers, typeof(LauncherEnums.BrowserType));
+            PopulateCheckedListBoxItems(checkedListBoxAdminCenters, typeof(LauncherEnums.AdminCenters));
+            PopulateCheckedListBoxItems(checkedListBoxFUL, typeof(LauncherEnums.FreqUsedLinks));
+            #region Commented
+            //checkedListBoxBrowsers.Items.Clear();
+            //foreach (var item in EnumUtil.GetValues<LauncherEnums.BrowserType>())
+            //{
+            //    checkedListBoxBrowsers.Items.Add(item.ToString());
+            //}
+
+            //checkedListBoxAdminCenters.Items.Clear();
+            //foreach (var item in EnumUtil.GetValues<LauncherEnums.AdminCenters>())
+            //{
+            //    checkedListBoxAdminCenters.Items.Add(item.ToString());
+            //}
+
+            //checkedListBoxFUL.Items.Clear();
+            //foreach (var item in EnumUtil.GetValues<LauncherEnums.FreqUsedLinks>())
+            //{
+            //    checkedListBoxFUL.Items.Add(item.ToString());
+            //}
+            #endregion
+        }
+        private void PopulateCheckedListBoxItems(CheckedListBox chkListBox, Type launcherEnumObj)
+        {
+            chkListBox.Items.Clear();
+            chkListBox.Items.AddRange(Enum.GetValues(launcherEnumObj).Cast<object>().ToArray());
+        }
+
+        private void SelectCheckedListBoxItems(TenantInfo currentTenant)
+        {
+            SelectCheckedListBoxItems(checkedListBoxBrowsers, typeof(LauncherEnums.BrowserType), currentTenant);
+            SelectCheckedListBoxItems(checkedListBoxAdminCenters, typeof(LauncherEnums.AdminCenters), currentTenant);
+            SelectCheckedListBoxItems(checkedListBoxFUL, typeof(LauncherEnums.FreqUsedLinks), currentTenant);
+        }
+        private void SelectCheckedListBoxItems(CheckedListBox chkListBox, Type launcherEnumObj, TenantInfo tenant)
+        {
+            
+            int count = chkListBox.Items.Count;
+            if (tenant == null)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    chkListBox.SetItemChecked(i, true);
+                }
+            }
+            else
+            {
+                var browserType = typeof(LauncherEnums.BrowserType);
+                if (browserType.Equals(launcherEnumObj))
+                {
+                    var obj = (LauncherEnums.BrowserType)Activator.CreateInstance(launcherEnumObj);
+                    for (int i = 0; i < count; i++)
+                    {
+                        chkListBox.SetItemChecked(i, false);
+                        Enum.TryParse(chkListBox.Items[i].ToString(), out obj);
+                        if (currentProfile.Browsers.Contains(obj))
+                        {
+                            chkListBox.SetItemChecked(i, true);
+                        }
+                    }
+                }
+                else
+                {
+                    var adminCentersType = typeof(LauncherEnums.AdminCenters);
+                    if (adminCentersType.Equals(launcherEnumObj))
+                    {
+                        var obj = (LauncherEnums.AdminCenters)Activator.CreateInstance(launcherEnumObj);
+                        for (int i = 0; i < count; i++)
+                        {
+                            chkListBox.SetItemChecked(i, false);
+                            Enum.TryParse(chkListBox.Items[i].ToString(), out obj);
+                            if (tenant.AdminCenterLinks.Contains(obj))
+                            {
+                                chkListBox.SetItemChecked(i, true);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var fulType = typeof(LauncherEnums.FreqUsedLinks);
+                        if (fulType.Equals(launcherEnumObj))
+                        {
+                            var obj = (LauncherEnums.FreqUsedLinks)Activator.CreateInstance(launcherEnumObj);
+                            for (int i = 0; i < count; i++)
+                            {
+                                chkListBox.SetItemChecked(i, false);
+                                Enum.TryParse(chkListBox.Items[i].ToString(), out obj);
+                                if (tenant.FreqLinks.Contains(obj))
+                                {
+                                    chkListBox.SetItemChecked(i, true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static class EnumUtil
+        {
+            public static IEnumerable<T> GetValues<T>()
+            {
+                return Enum.GetValues(typeof(T)).Cast<T>();
+            }
+        }
+
+        private void btnAddTenant_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (IsTenantValid(txtTenantPrefix.Text))
+                {
+                    currentProfile.Tenants.Add(new TenantInfo(txtTenantPrefix.Text, txtFriendlyName.Text));
+                    currentProfile.SaveConfiguration();
+                    LoadProfile();
+                    MessageBox.Show("Added tenant successfully!");
+                    txtTenantPrefix.Clear();
+                    txtFriendlyName.Clear();
+                }
+                else
+                    MessageBox.Show("Tenant name provided is invalid");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to add. Error: " + ex.ToString());
+            }
+        }
+
+        private void AddTenants(List<string> tenantsList)
+        {
+            foreach (var tenantPrefix in tenantsList)
+            {
+                AddTenants(tenantPrefix);
+            }
+            MessageBox.Show("Done!");
+        }
+        private void AddTenants(string tenantPrefix)
+        {
+            try
+            {
+                if (IsTenantValid(tenantPrefix))
+                {
+                    currentProfile.Tenants.Add(new TenantInfo(tenantPrefix, tenantPrefix));
+                    currentProfile.SaveConfiguration();
+                    LoadProfile();
+                }
+                else
+                    MessageBox.Show("Tenant name "+ tenantPrefix +" is invalid");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to add. Error: " + ex.ToString());
+            }
+        }
+
+
+        public static bool IsTenantValid(string tenantPrefix)
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    client.DownloadString("https://login.windows.net/"+ tenantPrefix + ".onmicrosoft.com/FederationMetadata/2007-06/FederationMetadata.xml");
+                }
+            }
+            catch (WebException ex)
+            {
+                var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
+                return false;
+            }
+            return true;
+        }
+
+
+        private void btnSaveBrowsers_Click(object sender, EventArgs e)
+        {
+            try
+            { 
+                CurrentProfile.Browsers.Clear();
+                foreach (var item in checkedListBoxBrowsers.CheckedItems)
+                {
+                    LauncherEnums.BrowserType browser;
+                    Enum.TryParse(item.ToString(), out browser);
+                    currentProfile.Browsers.Add(browser);
+                }
+                currentProfile.SaveConfiguration();
+                MessageBox.Show("Successfully saved!");
+                LauncherCtx.BuildContextMenu();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save. Error: " + ex.ToString());
+            }
+        }
+
+        private void btnSaveTenantLinks_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TenantInfo currentTenant = currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString());
+                currentTenant.AdminCenterLinks.Clear();
+                foreach (var item in checkedListBoxAdminCenters.CheckedItems)
+                {
+                    LauncherEnums.AdminCenters adc;
+                    Enum.TryParse(item.ToString(), out adc);
+                    currentTenant.AdminCenterLinks.Add(adc);
+                }
+
+                currentTenant.FreqLinks.Clear();
+                foreach (var item in checkedListBoxFUL.CheckedItems)
+                {
+                    LauncherEnums.FreqUsedLinks ful;
+                    Enum.TryParse(item.ToString(), out ful);
+                    currentTenant.FreqLinks.Add(ful);
+                }
+                currentProfile.SaveConfiguration();
+                MessageBox.Show("Successfully saved!");
+                LauncherCtx.BuildContextMenu();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Failed to save. Error: " + ex.ToString());
+            }
+        }
+
+        private void comboBoxTenants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TenantInfo currentTenant = currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString());
+            SelectCheckedListBoxItems(currentTenant);
+            bs.DataSource = currentTenant.CustomLinks;
+            //comboBoxCustomLinks.DataSource = bs;
+            //comboBoxCustomLinks.DisplayMember = "Value";
+            //comboBoxCustomLinks.ValueMember = "Key";
+            bs.ResetBindings(false);
+            //LoadProfile();
+        }
+
+        private void btnAddCustomLink_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(txtCustomLink.Text) && !string.IsNullOrEmpty(txtCustomLinkName.Text))
+                {
+                    TenantInfo currentTenant = currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString());
+                    TenantInfo.KeyValuePair<string, string> kvPair = new TenantInfo.KeyValuePair<string, string>(txtCustomLink.Text, txtCustomLinkName.Text);
+                    currentTenant.CustomLinks.Add(kvPair);
+                    currentProfile.SaveConfiguration();
+                    bs.ResetBindings(false);
+                    MessageBox.Show("Successfully added!");
+                    txtCustomLink.Clear();
+                    txtCustomLinkName.Clear();
+                    LauncherCtx.BuildContextMenu();
+                }
+                else
+                    MessageBox.Show("Please provide valid url and name");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to save. Error: " + ex.ToString());
+            }
+        }
+
+        private void btnDetect_Click(object sender, EventArgs e)
+        {
+            List<string> tenants = AutoDetectChromeHistory();
+            if (tenants != null && tenants.Count > 0)
+            {
+                if (MessageBox.Show("Confirm to add the detected tenants: " + string.Join(",", tenants), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    == System.Windows.Forms.DialogResult.Yes)
+                {
+                    AddTenants(tenants);
+                }
+            }
+            else
+                MessageBox.Show("No tenants detected!");
+        }
+
+        public static List<string> AutoDetectChromeHistory()
+        {
+            //List<string> t = new List<string>();
+            //t.Add("ten1");
+            //t.Add("ten2");
+            //return t;
+            // Get Current Users App Data
+            string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string[] tempstr = documentsFolder.Split('\\');
+            string tempstr1 = "";
+            documentsFolder += "\\Google\\Chrome\\User Data\\Default\\";
+            if (tempstr[tempstr.Length - 1] != "Local")
+            {
+                for (int i = 0; i < tempstr.Length - 1; i++)
+                {
+                    tempstr1 += tempstr[i] + "\\";
+                }
+                documentsFolder = tempstr1 + "Local\\Google\\Chrome\\User Data\\Default\\";
+            }
+
+
+            // Check if directory exists
+            if (Directory.Exists(documentsFolder))
+            {
+                SQLiteConnection conn = new SQLiteConnection
+                                                (@"Data Source=" + documentsFolder + "History");
+                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand();
+                cmd.Connection = conn;
+                //cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
+                //  Use the above query to get all the table names
+                cmd.CommandText = "Select * From urls";
+                SQLiteDataReader dr = cmd.ExecuteReader();
+                List<string> tenants = new List<string>();
+                var tempUrl = string.Empty;
+                var tenantUrl = string.Empty;
+                while (dr.Read())
+                {
+                    tempUrl = dr[1].ToString();
+                    if ((tempUrl.Contains(".sharepoint.com")))
+                    {
+                        tenantUrl = tempUrl.Substring(tempUrl.IndexOf("https://"), tempUrl.IndexOf(".com") + 4);
+                        //currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString())
+                        if (tenantUrl.Contains("sharepoint.com") && tenants.FirstOrDefault(stringToCheck => stringToCheck.Contains(tenantUrl)) == null)
+                        {
+                            tenants.Add(tenantUrl);
+                            Console.WriteLine(tenantUrl);
+                        }
+
+                    }
+
+                }
+
+                Console.WriteLine(tenants.Count);
+                List<string> tenantPrefixList = new List<string>();
+                foreach (var item in tenants)
+                {
+                    //Console.WriteLine(item.Substring(item.IndexOf("https://") + 8, item.IndexOf(".sharepoint.com") - 8));
+                    tenantPrefixList.Add(item.Substring(item.IndexOf("https://") + 8, item.IndexOf(".sharepoint.com") - 8));
+                }
+                return tenantPrefixList;
+            }
+            return null;
+
+        }
+    }
+}
