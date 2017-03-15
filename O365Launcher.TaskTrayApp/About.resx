@@ -119,15 +119,15 @@
   </resheader>
   <data name="label1.Text" xml:space="preserve">
     <value>Purpose: 
-We keep logging into multiple O365 tenants on daily basis. We have to juggle with multiple browsers, logins and inprivate/inconginto mode to keep active sessions on multiple tenants or same tenant with different logins. This tool helps you to ease this problem to some extent. It acts as an App Launcher providing a way to choose a tenant and a browser mode when opening the pages. This tool also acts as a bookmark maanger avoiding multiple hops to reach to an admin center or a sepcific page/site collection.
+We keep logging into multiple O365 tenants on daily basis. We have to juggle with multiple browsers, logins and inprivate/inconginto mode to keep active sessions on multiple tenants or same tenant with different logins. This tool helps you to ease this problem to some extent. It acts as an App Launcher providing a way to choose a tenant and a browser mode when opening the pages. This tool also acts as a bookmark manager avoiding multiple hops to reach to an admin center or a specific page/site collection.
 
 Privacy:
 This tool doesn't collect any type of information from your machine or from Office 365 tenants that you add. Note that you are just providing the tenant name and not the credentials.
 
 Future enhancements:
-a. Support user logins if possible (still researchign feasibility)
+a. Support user logins if possible (still researching feasibility)
 b. Support On-Premises links
-c. Support auto-detection of tenants for IE and Firefox
+c. Support auto-detection of tenants for IE, Edge and Firefox
 d. Convert this app to WPF or using Electron engine
 
 Thank you for trying this tool. Hopefully this helps you to be more productive. Please feel free to provide any feedback, improvements, complaints using the below link.</value>
@@ -135,97 +135,26 @@ Thank you for trying this tool. Hopefully this helps you to be more productive. 
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAABAAIAEBAAAAAAIABoBAAAJgAAACAgAAAAACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAEAE
-        AAAAAAAAAAAAAAAAAAAAAAAA////AcZpAAPGaQBbxmkAq8ZpAL/GaQDBxmkAwcZpAMHGaQDBxmkAwcZp
-        AMHGaQC/xmkAq8ZpAFvGaQAD////AcZpAAPGaQCt0nYO/+qZPf/1o0f/96VF//emRf/3pkX/96ZF//em
-        Rf/3pkX/9aVH/+qaPf/Sdg7/xmkArcZpAAPGaQBd0ncQ//uYN///hhz//4UY//+GGP//iR7//4oh//+L
-        If//jiH//48n//+SKf//lSv//aNB/9J4EP/GaQBdxmkAq+6HIP/9ghj//4UY//+GGP//iR7//4oh//+L
-        If//jiH//48n//+SKf//kyn//5Yp//+WL//ylC//xmkAq8ZpAL/9hRr//4UY//+GGP//iB7//4oh//+L
-        If//unv//8CF//+SKf//kin//5Yp//+WL///mTH//5wz/8ZpAL3GaQDB/4YY//+GGP//hx7//4oh//+L
-        If//jiH//+/i///37v//kin//5Up//+WL///mTH//5ox//+dNf/GaQC9xmkAwf+GGv//hx7//4oh//+L
-        If//jiH//48n//+hSv//o0r//5Up//+WL///mTH//5ox//+dMf//njf/xmkAvcZpAMH/hyH//4oh//+K
-        If//jiH//44l//+SKf//3b3//9Ko//+WLf//mDH//5ox//+cMf//njX//6A5/8ZpAL3GaQDB/4oh//+K
-        If//jSH//44j//+RKf//kin//+vW///ewf//lzH//5ox//+bMf//njP//585//+iOf/GaQC9xmkAwf+K
-        If//jSH//44j//+RKf//kin//5Up///z5v//6dH//5ox//+bMf//njP//585//+iOf//ojn/xmkAvcZp
-        AMH/jiH//44j//+RKf//kin//5Qp//+WK///+/f///He//+bMf//njP//585//+iOf//ojn//6M7/8Zp
-        AL3GaQC//ZEp//+RKf//kin//5Mp//+WK///lzH//82a///Hjf//njP//585//+iOf//ojn//6M7//+m
-        Qv/GaQC9xmkAq/CUL///kin//5Mp//+WK///lzH//5ox//+bMf//njP//585//+iOf//ojn//6M7//+m
-        Qv/wnTn/xmkAq8ZpAF3SeBD//a1S//+iO///nTn//545//+gOf//ojn//6I9//+mPf//pkH//6dB//+t
-        TP/9sVb/0ngQ/8ZpAF3GaQADxmkArdJ2Dv/qmj3/9apO//esTv/3rE7/96xO//esTv/3rE7/96xO//Wq
-        Tv/qmj3/0nYO/8ZpAK3GaQAD////AcZpAAPGaQBbxmkAq8ZpAL/GaQDBxmkAwcZpAMHGaQDBxmkAwcZp
-        AMHGaQC/xmkAq8ZpAFvGaQAD////AQAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA
-        //8AAP//AAD//wAA//8AAP//AAD//wAA//8oAAAAIAAAAEAAAAABACAAAAAAAIAQAAAAAAAAAAAAAAAA
-        AAAAAAAA////Af///wH///8B////Af///wH///8BxmkAQ8ZpAGvGaQB7xmkAhcZpAIXGaQCFxmkAhcZp
-        AIXGaQCFxmkAhcZpAIXGaQCFxmkAhcZpAIXGaQCFxmkAhcZpAIXGaQB7xmkAa8ZpAEP///8B////Af//
-        /wH///8B////Af///wH///8B////Af///wHGaQAJxmkAe8ZpAO/GaQD/xmkA/8ZpAP/GaQD/xmkA/8Zp
-        AP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8Zp
-        AO/GaQB7xmkACf///wH///8B////Af///wH///8BxmkAGcZpAM/GaQD/xmkA/85xCP/eiin/55Y5/++e
-        Of/vnjn/7545/++eOf/vnjn/7545/++eOf/vnjn/7545/++eOf/vnjn/7545/++eOf/vnjn/55Y5/96K
-        Kf/OcQj/xmkA/8ZpAP/GaQDPxmkAGf///wH///8B////AcZpAAnGaQDPxmkA/85tAP/vmjn//7Zj//+2
-        Y///rlr//6pS//+qUv//rlL//65S//+uUv//rlL//65S//+uUv//rlL//65S//+uUv//rlL//65S//+u
-        Uv//slr//7pj//+2Y//vmjn/zm0A/8ZpAP/GaQDPxmkACf///wH///8BxmkAe8ZpAP/ObQD/96pS//+m
-        Sv//jin//4YY//+CGP//hhj//4YY//+GGP//hhj//4oh//+KIf//iiH//4oh//+KIf//jiH//44h//+O
-        If//jin//5Ip//+SKf//kin//5ox//+uUv/3qlL/zm0A/8ZpAP/GaQB7////Af///wHGaQD3xmkA/++e
-        Qv//jin/94IY//+CGP//ghj//4YY//+GGP//hhj//4YY//+KIf//iiH//4oh//+KIf//iiH//44h//+O
-        If//jiH//44p//+SKf//kin//5Ip//+SKf//lin//5Yp//+eOf/vokL/xmkA/8ZpAPf///8BxmkAQ8Zp
-        AP/WfRj//5Ip//eCGP//ghj//4IY//+GGP//hhj//4YY//+GGP//iiH//4oh//+KIf//iiH//4oh//+O
-        If//jiH//44h//+OKf//kin//5Ip//+SKf//kin//5Yp//+WKf//lin//5Yx//+iQv/WfRj/xmkA/8Zp
-        AEPGaQBrxmkA/++OKf/3ghj//4IY//+CGP//hhj//4YY//+GGP//hhj//4oh//+KIf//iiH//4oh//+K
-        If//jiH//44h//+OIf//jin//5Ip//+SKf//kin//5Ip//+WKf//lin//5Yp//+WMf//ljH//5ox//ea
-        Mf/GaQD/xmkAa8ZpAHvGaQD/94oh//+CGP//ghj//4YY//+GGP//hhj//4YY//+KIf//iiH//4oh//+K
-        If//iiH//44h//+eSv//plL//44p//+SKf//kin//5Ip//+SKf//lin//5Yp//+WKf//ljH//5Yx//+a
-        Mf//mjH//545/8ZpAP/GaQB7xmkAhcZpAP//hhj//4IY//+GGP//hhj//4YY//+GGP//hiH//4oh//+K
-        If//iiH//4oh//+OIf//voT/////////////z5z//5Ip//+SKf//kin//5Ip//+WKf//lin//5Yx//+W
-        Mf//mjH//5ox//+aMf//njH/xmkA/8ZpAHvGaQCFxmkA//+GGP//hhj//4YY//+GGP//hhj//4Yh//+K
-        If//iiH//4oh//+KIf//jiH//44h///r3v/////////////79///kin//5Ip//+SKf//lin//5Yp//+W
-        Mf//ljH//5ox//+aMf//mjH//5ox//+eOf/GaQD/xmkAe8ZpAIXGaQD//4YY//+GGP//hhj//4YY//+G
-        If//iiH//4oh//+KIf//iiH//44h//+OIf//jiH//9Ot/////////////+PG//+SKf//kin//5Yp//+W
-        Kf//ljH//5Yx//+aMf//mjH//5ox//+aMf//njH//545/8ZpAP/GaQB7xmkAhcZpAP//hhj//4YY//+G
-        GP//hiH//4oh//+KIf//iiH//4oh//+OIf//jiH//44h//+OKf//kjH//76E///DjP//mjH//5Ip//+W
-        Kf//lin//5Yx//+WMf//mjH//5ox//+aMf//mjH//54x//+eMf//njn/xmkA/8ZpAHvGaQCFxmkA//+G
-        If//hhj//4Yh//+KIf//iiH//4oh//+KIf//jiH//44h//+OIf//jin//5Ip//+SKf//okr//55C//+S
-        Kf//lin//5Yp//+WMf//ljH//5ox//+aMf//mjH//5ox//+eMf//njH//545//+eOf/GaQD/xmkAe8Zp
-        AIXGaQD//4Yh//+GIf//iiH//4oh//+KIf//iiH//44h//+OIf//jiH//44p//+SKf//kin//65j////
-        ////+/f//55C//+WKf//ljH//5Yx//+aMf//mjH//5ox//+aMf//njH//54x//+eOf//njn//6I5/8Zp
-        AP/GaQB7xmkAhcZpAP//hiH//4oh//+KIf//iiH//4oh//+KIf//jiH//44h//+OIf//jin//5Ip//+S
-        Kf//y5T/////////////smv//5Yp//+WMf//ljH//5ox//+aMf//mjH//5ox//+eMf//njH//545//+e
-        Of//ojn/xmkA/8ZpAHvGaQCFxmkA//+KIf//iiH//4oh//+KIf//iiH//44h//+OIf//jiH//44p//+S
-        Kf//kin//5Ip///Tpf////////////+6e///ljH//5Yx//+aMf//mjH//5ox//+aMf//njH//54x//+e
-        Of//njn//6I5//+iOf/GaQD/xmkAe8ZpAIXGaQD//4oh//+KIf//iiH//4oh//+OIf//jiH//44h//+O
-        Kf//kin//5Ip//+SKf//kin//9u1/////////////8OM//+WMf//mjH//5ox//+aMf//mjH//54x//+e
-        Mf//njn//545//+iOf//ojn//6I5/8ZpAP/GaQB7xmkAhcZpAP//iiH//4oh//+KIf//jiH//44h//+O
-        If//jin//5Ip//+SKf//kin//5Ip//+WKf//48b/////////////z5z//5ox//+aMf//mjH//5ox//+e
-        Mf//njH//545//+eOf//ojn//6I5//+iOf//ojn/xmkA/8ZpAHvGaQCFxmkA//+KIf//iiH//44h//+O
-        If//jiH//44p//+SKf//kin//5Ip//+SKf//lin//5Yp///r1v/////////////Xrf//mjH//5ox//+a
-        Mf//njH//54x//+eOf//njn//6I5//+iOf//ojn//6I5//+iOf/GaQD/xmkAe8ZpAIXGaQD//44h//+O
-        If//jiH//44h//+OKf//kin//5Ip//+SKf//kin//5Yp//+WKf//lin///Pn/////////////9+1//+a
-        Mf//mjH//54x//+eMf//njn//545//+iOf//ojn//6I5//+iOf//ojn//6I5/8ZpAP/GaQB7xmkAhcZp
-        AP//jiH//44h//+OIf//jin//5Ip//+SKf//kin//5Ip//+SKf//lin//5Yp//+WMf//+/f/////////
-        ////58b//5ox//+eMf//njH//545//+eOf//ojn//6I5//+iOf//ojn//6I5//+iOf//pkL/xmkA/8Zp
-        AHvGaQCFxmkA//+SKf//jiH//44p//+SKf//kin//5Ip//+SKf//kin//5Yp//+WKf//ljH//5Yx///v
-        3v/////////////Xrf//njH//54x//+eOf//njn//6I5//+iOf//ojn//6I5//+iOf//ojn//6ZC//+m
-        Qv/GaQD/xmkAe8ZpAHvGaQD/95Yx//+OKf//kin//5Ip//+SKf//kin//5Ip//+WKf//lin//5Yx//+W
-        Mf//mjH//5ox//+uWv//qlL//545//+eMf//njn//545//+iOf//ojn//6I5//+iOf//ojn//6I5//+m
-        Qv//pkL//6ZC/8ZpAP/GaQB7xmkAa8ZpAP/vljH//5Ip//+SKf//kin//5Ip//+SKf//lin//5Yp//+W
-        Mf//ljH//5ox//+aMf//mjH//5ox//+eMf//njH//545//+eOf//ojn//6I5//+iOf//ojn//6I5//+i
-        Of//pkL//6ZC//+qQv/vmjn/xmkA/8ZpAGvGaQBDxmkA/9Z9EP//rlL//5Ip//+SKf//kin//5Yp//+W
-        Kf//ljH//5Yx//+aMf//mjH//5ox//+aMf//njH//54x//+eOf//njn//6I5//+iOf//ojn//6I5//+i
-        Of//ojn//6ZC//+mQv//pkL//7Za/9Z9EP/GaQD/xmkAQ////wHGaQD3xmkA/++iQv//slr//545//+W
-        Kf//lin//5Yx//+WMf//mjH//5ox//+aMf//mjH//54x//+eMf//njn//545//+iOf//ojn//6I5//+i
-        Of//ojn//6I5//+mQv//pkL//6pK//+2Wv/vokL/xmkA/8ZpAPf///8B////AcZpAHvGaQD/zm0A//eq
-        Uv//umP//7JS//+qSv//pkL//6JC//+iQv//okL//6ZC//+mQv//pkL//6ZC//+mQv//pkL//6pC//+q
-        Qv//qkr//6pK//+qSv//rkr//7JS//+2Wv//umP/96pS/85tAP/GaQD/xmkAe////wH///8BxmkACcZp
-        AM/GaQD/zm0A/++aOf//tmP//7pj//+6Y///umP//7pj//+6Y///umP//7pj//+6Y///umP//7pj//+6
-        Y///umP//7pj//+6Y///umP//7pj//+6Y///umP//7Zj/++aOf/ObQD/xmkA/8ZpAM/GaQAJ////Af//
-        /wH///8BxmkAGcZpAM/GaQD/xmkA/85xCP/eiin/55Y5/++eOf/vnjn/7545/++eOf/vnjn/7545/++e
-        Of/vnjn/7545/++eOf/vnjn/7545/++eOf/vnjn/55Y5/96KKf/OcQj/xmkA/8ZpAP/GaQDPxmkAGf//
-        /wH///8B////Af///wH///8BxmkACcZpAHvGaQDvxmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8Zp
-        AP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQD/xmkA/8ZpAP/GaQDvxmkAe8Zp
-        AAn///8B////Af///wH///8B////Af///wH///8B////Af///wHGaQBDxmkAa8ZpAHvGaQCFxmkAhcZp
-        AIXGaQCFxmkAhcZpAIXGaQCFxmkAhcZpAIXGaQCFxmkAhcZpAIXGaQCFxmkAhcZpAHvGaQBrxmkAQ///
-        /wH///8B////Af///wH///8B////AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAA
+        AADGcgBtxnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8Zy
+        AP/GcgBtxnIAbcZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8Zy
+        AP/GcgD/xnIAbcZyAG3GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8Zy
+        AP/GcgD/xnIA/8ZyAG3GcgBtxnIA/8ZyAP/WmUf/5sKR/+G1ev/Ohyb/5sKR/+bCkf/Ohyb/4bV6/+bC
+        kf/WmUf/xnIA/8ZyAP/GcgBtxnIAbcZyAP/GcgD/4rd8///////16NX/1ZdD////////////1ZdD//Xo
+        1f//////4rd8/8ZyAP/GcgD/xnIAbcZyAG3GcgD/xnIA/9qjWP/u1rb/6MaY/9CMMP/u1rb/7ta2/9CM
+        MP/oxpj/7ta2/9qjWP/GcgD/xnIA/8ZyAG3GcgBtxnIA/8ZyAP/KexH/zoYk/8yCHv/Idwn/zoYk/86G
+        JP/Idwn/zIIe/86GJP/KexH/xnIA/8ZyAP/GcgBtxnIAbcZyAP/GcgD/4rd8///////16NX/1ZdD////
+        ////////1ZdD//Xo1f//////4rd8/8ZyAP/GcgD/xnIAbcZyAG3GcgD/xnIA/+K3fP//////9ejV/9WX
+        Q////////////9WXQ//16NX//////+K3fP/GcgD/xnIA/8ZyAG3GcgBtxnIA/8ZyAP/KexH/zoYk/8yC
+        Hv/Idwn/zoYk/86GJP/Idwn/zIIe/86GJP/KexH/xnIA/8ZyAP/GcgBtxnIAbcZyAP/GcgD/2qNY/+7W
+        tv/oxpj/0Iww/+7Wtv/u1rb/0Iww/+jGmP/u1rb/2qNY/8ZyAP/GcgD/xnIAbcZyAG3GcgD/xnIA/+K3
+        fP//////9ejV/9WXQ////////////9WXQ//16NX//////+K3fP/GcgD/xnIA/8ZyAG3GcgBtxnIA/8Zy
+        AP/WmUf/5sKR/+G1ev/Ohyb/5sKR/+bCkf/Ohyb/4bV6/+bCkf/WmUf/xnIA/8ZyAP/GcgBtxnIAbcZy
+        AP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIAbcZy
+        AG3GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8Zy
+        AG3GcgBtxnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8ZyAP/GcgD/xnIA/8Zy
+        AP/GcgBtAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA
+        //8AAP//AAD//w==
 </value>
   </data>
 </root>

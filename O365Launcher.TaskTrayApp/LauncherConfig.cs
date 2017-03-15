@@ -36,13 +36,17 @@ namespace O365Launcher.TaskTrayApp
                 return currentProfile;
             }
 
-            
+            set { currentProfile = value; }
         }
         public LauncherAppContext LauncherCtx { get { return launcherCtx; } set { this.launcherCtx = value; } }
-        private void button2_Click(object sender, EventArgs e)
+
+        private void Import_Click(object sender, EventArgs e)
         {
             int size = -1;
+            openFileDialog1.Filter = "Xml files|*.xml";
+            openFileDialog1.Title = "Select the O365 launcher config (xml) file.";
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+
             if (result == DialogResult.OK) // Test result.
             {
                 string file = openFileDialog1.FileName;
@@ -51,6 +55,9 @@ namespace O365Launcher.TaskTrayApp
                 {
                     string text = File.ReadAllText(file);
                     size = text.Length;
+                    CurrentProfile = LauncherProfile.LoadFromXML(text);
+                    CurrentProfile.SaveConfiguration();
+                    LoadProfile();
                 }
                 catch (IOException)
                 {
@@ -60,36 +67,19 @@ namespace O365Launcher.TaskTrayApp
             Console.WriteLine(result); // <-- For debugging use.
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Export_Click(object sender, EventArgs e)
         {
-            // If the file name is not an empty string open it for saving.  
-            if (saveFileDialog1.FileName != "")
+            FileStream fs = null;
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "Xml files|*.xml";
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                // Saves the Image via a FileStream created by the OpenFile method.  
-                System.IO.FileStream fs =
-                   (System.IO.FileStream)saveFileDialog1.OpenFile();
-                // Saves the Image in the appropriate ImageFormat based upon the  
-                // File type selected in the dialog box.  
-                // NOTE that the FilterIndex property is one-based.  
-                switch (saveFileDialog1.FilterIndex)
-                {
-                    case 1:
-                        this.button2.Image.Save(fs,
-                           System.Drawing.Imaging.ImageFormat.Jpeg);
-                        break;
-
-                    case 2:
-                        this.button2.Image.Save(fs,
-                           System.Drawing.Imaging.ImageFormat.Bmp);
-                        break;
-
-                    case 3:
-                        this.button2.Image.Save(fs,
-                           System.Drawing.Imaging.ImageFormat.Gif);
-                        break;
-                }
-
-                fs.Close();
+                fs = new FileStream(dialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                // put the rest of your file saving code here
+                byte[] byteData = Encoding.ASCII.GetBytes(CurrentProfile.ToXml());
+                fs.Write(byteData,
+                            0, byteData.Length);
+                fs.Dispose();
             }
         }
 
@@ -415,7 +405,7 @@ namespace O365Launcher.TaskTrayApp
             List<string> tenants = AutoDetectChromeHistory();
             if (tenants != null && tenants.Count > 0)
             {
-                if (MessageBox.Show("Confirm to add the detected tenants: " + string.Join(",", tenants), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                if (MessageBox.Show("Confirm to add the detected tenants: "+ Environment.NewLine + string.Join(",", tenants), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                     == System.Windows.Forms.DialogResult.Yes)
                 {
                     AddTenants(tenants);
@@ -464,7 +454,7 @@ namespace O365Launcher.TaskTrayApp
                 while (dr.Read())
                 {
                     tempUrl = dr[1].ToString();
-                    if ((tempUrl.Contains(".sharepoint.com")))
+                    if ((tempUrl.Contains(".sharepoint.com")) && (!tempUrl.Contains("-admin.sharepoint.com")))
                     {
                         tenantUrl = tempUrl.Substring(tempUrl.IndexOf("https://"), tempUrl.IndexOf(".com") + 4);
                         //currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString())

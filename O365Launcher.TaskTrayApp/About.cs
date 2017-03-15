@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Deployment;
+using System.Deployment.Application;
 
 namespace O365Launcher.TaskTrayApp
 {
@@ -24,13 +26,20 @@ namespace O365Launcher.TaskTrayApp
 
         private void About_Load(object sender, EventArgs e)
         {
-            this.Text = "About (v." + Application.ProductVersion + ")";
-            //lblVersion.Text = "Version: " + Application.ProductVersion;
+            Version appVersion;
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                appVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion;
+                this.Text = "About (v." + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion + ")";
+                //lblVersion.Text = "Version: " + Application.ProductVersion;
+            }
+            else
+                this.Text = "About (v." + Application.ProductVersion + ")";
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("mailto:sri@nivas.org");
+            System.Diagnostics.Process.Start("mailto:svarukala@gmail.com");
         }
     }
 }

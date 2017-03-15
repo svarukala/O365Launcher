@@ -470,7 +470,7 @@
             this.button3.TabIndex = 0;
             this.button3.Text = "Export";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.Export_Click);
             // 
             // groupBox4
             // 
@@ -500,7 +500,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Browse...";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Import_Click);
             // 
             // label5
             // 
@@ -510,10 +510,6 @@
             this.label5.Size = new System.Drawing.Size(183, 25);
             this.label5.TabIndex = 0;
             this.label5.Text = "Browse to the file:";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // saveFileDialog1
             // 
