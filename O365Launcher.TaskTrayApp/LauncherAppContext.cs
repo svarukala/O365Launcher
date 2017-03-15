@@ -259,6 +259,7 @@ namespace O365Launcher.TaskTrayApp
                 configWindow.Focus();
             else
                 configWindow.ShowDialog();
+            
         }
 
         void ShowAbout(object sender, EventArgs e)

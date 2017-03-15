@@ -11,6 +11,7 @@ using System.IO;
 using O365Launcher.TaskTrayApp.Model;
 using System.Net;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace O365Launcher.TaskTrayApp
 {
@@ -402,17 +403,39 @@ namespace O365Launcher.TaskTrayApp
 
         private void btnDetect_Click(object sender, EventArgs e)
         {
-            List<string> tenants = AutoDetectChromeHistory();
-            if (tenants != null && tenants.Count > 0)
+            if (!CheckIfBrowserRunning(LauncherEnums.BrowserType.Chrome))
             {
-                if (MessageBox.Show("Confirm to add the detected tenants: "+ Environment.NewLine + string.Join(",", tenants), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                    == System.Windows.Forms.DialogResult.Yes)
+                List<string> tenants = AutoDetectChromeHistory();
+                if (tenants != null && tenants.Count > 0)
                 {
-                    AddTenants(tenants);
+                    if (MessageBox.Show("Confirm to add the detected tenants: " + Environment.NewLine + string.Join(",", tenants), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        AddTenants(tenants);
+                    }
                 }
+                else
+                    MessageBox.Show("No tenants detected!");
             }
             else
-                MessageBox.Show("No tenants detected!");
+                MessageBox.Show("Please close all your Chrome browsers for this feaure to work.");
+        }
+
+        private static bool CheckIfBrowserRunning(LauncherEnums.BrowserType browser)
+        {
+            switch (browser)
+            {
+                case LauncherEnums.BrowserType.Chrome:
+                    Process[] chromeInstances = Process.GetProcessesByName("chrome");
+                    if (chromeInstances.Length > 0)
+                    {
+                        return true;
+                    }
+                    break;
+
+            }
+            
+            return false;
         }
 
         public static List<string> AutoDetectChromeHistory()

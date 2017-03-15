@@ -523,6 +523,7 @@
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LauncherConfig";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
             this.Load += new System.EventHandler(this.LauncherConfig_Load);
             this.tabControl1.ResumeLayout(false);
