@@ -168,7 +168,7 @@ namespace O365Launcher.TaskTrayApp
             }
             else
                 url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start(@"IExplore.exe", "-private /nomerge "+ url);
+            var p = Process.Start(@"IExplore.exe", "-private "+ url);
             p.Dispose();
         }
         private void OpenInFF(object sender, EventArgs e)

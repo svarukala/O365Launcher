@@ -249,17 +249,28 @@ namespace O365Launcher.TaskTrayApp
         {
             try
             {
-                if (IsTenantValid(txtTenantPrefix.Text))
+                if (!String.IsNullOrEmpty(txtTenantPrefix.Text))
                 {
-                    currentProfile.Tenants.Add(new TenantInfo(txtTenantPrefix.Text, txtFriendlyName.Text));
-                    currentProfile.SaveConfiguration();
-                    LoadProfile();
+                    txtFriendlyName.Text = string.IsNullOrEmpty(txtFriendlyName.Text) ? txtTenantPrefix.Text : txtFriendlyName.Text;
+                    AddTenant(txtTenantPrefix.Text, txtFriendlyName.Text);
                     MessageBox.Show("Added tenant successfully!");
                     txtTenantPrefix.Clear();
                     txtFriendlyName.Clear();
                 }
                 else
-                    MessageBox.Show("Tenant name provided is invalid");
+                    MessageBox.Show("Please provide a valid tenant name.");
+                //if (!String.IsNullOrEmpty(txtTenantPrefix.Text) && IsTenantValid(txtTenantPrefix.Text))
+                //{
+                //    txtFriendlyName.Text = string.IsNullOrEmpty(txtFriendlyName.Text) ? txtTenantPrefix.Text: txtFriendlyName.Text;
+                //    currentProfile.Tenants.Add(new TenantInfo(txtTenantPrefix.Text, txtFriendlyName.Text));
+                //    currentProfile.SaveConfiguration();
+                //    LoadProfile();
+                //    MessageBox.Show("Added tenant successfully!");
+                //    txtTenantPrefix.Clear();
+                //    txtFriendlyName.Clear();
+                //}
+                //else
+                //    MessageBox.Show("Tenant name provided is invalid");
             }
             catch (Exception ex)
             {
@@ -271,17 +282,17 @@ namespace O365Launcher.TaskTrayApp
         {
             foreach (var tenantPrefix in tenantsList)
             {
-                AddTenants(tenantPrefix);
+                AddTenant(tenantPrefix, tenantPrefix);
             }
             MessageBox.Show("Done!");
         }
-        private void AddTenants(string tenantPrefix)
+        private void AddTenant(string tenantPrefix, string tenantFriendlyName)
         {
             try
             {
                 if (IsTenantValid(tenantPrefix))
                 {
-                    currentProfile.Tenants.Add(new TenantInfo(tenantPrefix, tenantPrefix));
+                    currentProfile.Tenants.Add(new TenantInfo(tenantPrefix, tenantFriendlyName));
                     currentProfile.SaveConfiguration();
                     LoadProfile();
                 }
@@ -502,6 +513,22 @@ namespace O365Launcher.TaskTrayApp
             }
             return null;
 
+        }
+
+        private void btnRemoveTenant_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TenantInfo currentTenant = currentProfile.Tenants.Find(x => x.TenantPrefix == listBoxTenants.SelectedValue.ToString());
+                currentProfile.Tenants.Remove(currentTenant); //.Add(new TenantInfo(txtTenantPrefix.Text, txtFriendlyName.Text));
+                currentProfile.SaveConfiguration();
+                LoadProfile();
+                MessageBox.Show("Removed tenant successfully!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to add. Error: " + ex.ToString());
+            }
         }
     }
 }

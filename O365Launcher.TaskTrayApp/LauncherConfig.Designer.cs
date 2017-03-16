@@ -73,6 +73,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.btnRemoveTenant = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -103,6 +104,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnRemoveTenant);
             this.tabPage1.Controls.Add(this.groupBox8);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.listBoxTenants);
@@ -128,9 +130,9 @@
             // 
             // btnDetect
             // 
-            this.btnDetect.Location = new System.Drawing.Point(553, 114);
+            this.btnDetect.Location = new System.Drawing.Point(538, 114);
             this.btnDetect.Name = "btnDetect";
-            this.btnDetect.Size = new System.Drawing.Size(168, 41);
+            this.btnDetect.Size = new System.Drawing.Size(183, 41);
             this.btnDetect.TabIndex = 1;
             this.btnDetect.Text = "Auto-Detect";
             this.btnDetect.UseVisualStyleBackColor = true;
@@ -156,16 +158,16 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(17, 264);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(742, 215);
+            this.groupBox1.Size = new System.Drawing.Size(742, 206);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add New Tenant";
             // 
             // btnAddTenant
             // 
-            this.btnAddTenant.Location = new System.Drawing.Point(553, 147);
+            this.btnAddTenant.Location = new System.Drawing.Point(538, 147);
             this.btnAddTenant.Name = "btnAddTenant";
-            this.btnAddTenant.Size = new System.Drawing.Size(168, 43);
+            this.btnAddTenant.Size = new System.Drawing.Size(183, 43);
             this.btnAddTenant.TabIndex = 4;
             this.btnAddTenant.Text = "Add Tenant";
             this.btnAddTenant.UseVisualStyleBackColor = true;
@@ -209,8 +211,7 @@
             this.listBoxTenants.ItemHeight = 25;
             this.listBoxTenants.Location = new System.Drawing.Point(176, 53);
             this.listBoxTenants.Name = "listBoxTenants";
-            this.listBoxTenants.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxTenants.Size = new System.Drawing.Size(562, 179);
+            this.listBoxTenants.Size = new System.Drawing.Size(562, 154);
             this.listBoxTenants.TabIndex = 1;
             // 
             // label1
@@ -299,7 +300,7 @@
             // 
             // btnAddCustomLink
             // 
-            this.btnAddCustomLink.Location = new System.Drawing.Point(577, 182);
+            this.btnAddCustomLink.Location = new System.Drawing.Point(577, 179);
             this.btnAddCustomLink.Name = "btnAddCustomLink";
             this.btnAddCustomLink.Size = new System.Drawing.Size(142, 45);
             this.btnAddCustomLink.TabIndex = 7;
@@ -515,6 +516,16 @@
             // 
             this.saveFileDialog1.Title = "Export configruation to XML file";
             // 
+            // btnRemoveTenant
+            // 
+            this.btnRemoveTenant.Location = new System.Drawing.Point(555, 215);
+            this.btnRemoveTenant.Name = "btnRemoveTenant";
+            this.btnRemoveTenant.Size = new System.Drawing.Size(183, 43);
+            this.btnRemoveTenant.TabIndex = 5;
+            this.btnRemoveTenant.Text = "Remove Tenant";
+            this.btnRemoveTenant.UseVisualStyleBackColor = true;
+            this.btnRemoveTenant.Click += new System.EventHandler(this.btnRemoveTenant_Click);
+            // 
             // LauncherConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -596,5 +607,6 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Button btnDetect;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnRemoveTenant;
     }
 }
