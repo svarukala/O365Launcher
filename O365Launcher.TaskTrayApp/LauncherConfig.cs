@@ -19,6 +19,8 @@ namespace O365Launcher.TaskTrayApp
     {
         LauncherProfile currentProfile;
         BindingSource bs = new BindingSource();
+        BindingSource bsBkmGroups = new BindingSource();
+        BindingSource bsBkmLinks = new BindingSource();
         LauncherAppContext launcherCtx;
         public LauncherConfig()
         {
@@ -119,6 +121,12 @@ namespace O365Launcher.TaskTrayApp
                 comboBoxCustomLinks.DisplayMember = "Value";
                 comboBoxCustomLinks.ValueMember = "Key";
 
+                bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
+                comboBoxBkmGroup.DataSource = bsBkmGroups;//currentProfile.Bookmarks;
+                comboBoxBkmGroup.DisplayMember = "GroupName";
+                comboBoxBkmGroup.ValueMember = "GroupName";
+                comboBoxBkmGroup.SelectedIndexChanged += ComboBoxBkmGroup_SelectedIndexChanged;
+
                 SelectCheckedListBoxItems(currentTenant);
                 #region
                 //int count = checkedListBoxBrowsers.Items.Count;
@@ -136,6 +144,20 @@ namespace O365Launcher.TaskTrayApp
             LauncherCtx.BuildContextMenu();
         }
 
+        private void ComboBoxBkmGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateListBoxBkmLinks();
+        }
+
+        private void PopulateListBoxBkmLinks()
+        {
+            BookmarkInfo bkmInfo = currentProfile.Bookmarks.Find(x => x.GroupName == comboBoxBkmGroup.SelectedValue.ToString());
+            //listBoxBkmLinks.DataSource = bkmInfo.Links;
+            bsBkmLinks.DataSource = bkmInfo.Links;
+            listBoxBkmLinks.DataSource = bsBkmLinks;
+            listBoxBkmLinks.DisplayMember = "Value";
+            listBoxBkmLinks.ValueMember = "Value";
+        }
         private void PopulateCheckedListBoxItems()
         {
             PopulateCheckedListBoxItems(checkedListBoxBrowsers, typeof(LauncherEnums.BrowserType));
@@ -528,6 +550,77 @@ namespace O365Launcher.TaskTrayApp
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to add. Error: " + ex.ToString());
+            }
+        }
+
+        private void btnAddBkmLink_Click(object sender, EventArgs e)
+        {
+            if (comboBoxBkmGroup.SelectedValue == null)
+            {
+                MessageBox.Show("Please select the Bookmark group");
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(txtLinkToAdd.Text) || string.IsNullOrEmpty(txtLinkName.Text))
+                {
+                    MessageBox.Show("Please provide valid link and name to add.");
+                }
+                else
+                {
+                    BookmarkInfo bkmInfo = CurrentProfile.Bookmarks.Find(x => x.GroupName == comboBoxBkmGroup.SelectedValue.ToString());
+                    //BookmarkInfo.
+                    BkmKeyValuePair<string, string> bkmPair = new Model.BkmKeyValuePair<string, string>(this.txtLinkToAdd.Text, this.txtLinkName.Text);
+                    bkmInfo.Links.Add(bkmPair);
+                    CurrentProfile.SaveConfiguration();
+                    txtLinkName.Clear();
+                    txtLinkToAdd.Clear();
+                    LoadProfile();
+                    //PopulateListBoxBkmLinks();
+                    bsBkmLinks.DataSource = bkmInfo.Links;
+                    bsBkmLinks.ResetBindings(false);
+                }
+            }
+        }
+
+        private void AddBkmGroup(string groupName)
+        {
+            BookmarkInfo bkmInfo = new BookmarkInfo(groupName);
+            CurrentProfile.Bookmarks.Add(bkmInfo);
+            CurrentProfile.SaveConfiguration();
+            LoadProfile();
+            //return 
+        }
+
+        private void btnAddGroup_Click(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(txtNewGroupName.Text))
+            {
+                MessageBox.Show("Please provide a group name.");
+            }
+            else
+            {
+                AddBkmGroup(txtNewGroupName.Text.Trim());
+                txtNewGroupName.Clear();
+                MessageBox.Show("Added the group");
+                bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
+                bsBkmGroups.ResetBindings(false);
+            }
+        }
+
+        private void btnRemoveLink_Click(object sender, EventArgs e)
+        {
+            var val = listBoxBkmLinks.SelectedValue.ToString();
+            BookmarkInfo bkmInfo = CurrentProfile.Bookmarks.Find(x => x.GroupName == comboBoxBkmGroup.SelectedValue.ToString());
+            //bkmInfo.Links.RemoveAll(l => l.Value == val);
+            int index = bkmInfo.Links.FindIndex(l => l.Value == val);
+
+            if (index >= 0)
+            {
+                bkmInfo.Links.RemoveAt(index);
+                CurrentProfile.SaveConfiguration();
+                LoadProfile();
+                bsBkmLinks.DataSource = bkmInfo.Links;
+                bsBkmLinks.ResetBindings(false);
             }
         }
     }

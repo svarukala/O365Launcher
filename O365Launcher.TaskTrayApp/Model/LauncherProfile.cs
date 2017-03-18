@@ -4,20 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace O365Launcher.TaskTrayApp.Model
 {
+    [Serializable]
     public class LauncherProfile
     {
         public LauncherProfile()
         {
             this.Browsers = new List<LauncherEnums.BrowserType>();
             this.Tenants = new List<TenantInfo>();
+            this.Bookmarks = new List<BookmarkInfo>();
         }
         //public string[] Browsers { get; set; }
         public List<LauncherEnums.BrowserType> Browsers { get; set; }
 
         public List<TenantInfo> Tenants { get; set; }
+
+        [XmlElement(IsNullable = true)]
+        public List<BookmarkInfo> Bookmarks { get; set; }
 
         public void SaveConfiguration()
         {

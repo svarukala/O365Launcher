@@ -60,7 +60,19 @@ namespace O365Launcher.TaskTrayApp
                 tenantMenuItem.MenuItems.Add(customLinksMenuItem);
                 menu.MenuItems.Add(tenantMenuItem); //, new EventHandler(Exit)));
             }
-
+            foreach (var bkmInfo in configWindow.CurrentProfile.Bookmarks)
+            {
+                MenuItem bkmMenuItem = new MenuItem(bkmInfo.GroupName);
+                foreach (var link in bkmInfo.Links)
+                {
+                    MenuItem linkMenuItem = new MenuItem(link.Value);
+                    linkMenuItem.Name = "Bookmark";
+                    linkMenuItem.Tag = link.Key;
+                    AddBrowserMenuItems(linkMenuItem, configWindow);
+                    bkmMenuItem.MenuItems.Add(linkMenuItem);
+                }
+                menu.MenuItems.Add(bkmMenuItem);
+            }
             menu.MenuItems.Add(new MenuItem("Configuration", new EventHandler(ShowConfig)));
             menu.MenuItems.Add(new MenuItem("About", new EventHandler(ShowAbout)));
             menu.MenuItems.Add(new MenuItem("Exit", new EventHandler(Exit)));
@@ -100,126 +112,66 @@ namespace O365Launcher.TaskTrayApp
             //mItem.MenuItems.Add(browse);
         }
 
-        private void OpenInChrome(object sender, EventArgs e)
+        private string FindMenuItemUrl(Menu parentMenu)
         {
-            var n = ((MenuItem)sender).Parent.Name;
             var url = "";
-            if (n.Equals("CustomLink"))
+            if (parentMenu.Name.Equals("CustomLink") || parentMenu.Name.Equals("Bookmark"))
             {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
+                url = parentMenu.Tag.ToString();
             }
-            else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
+            else if (parentMenu.ToString().Contains("SharePoint"))
             {
-                url = ((MenuItem)sender).Parent.Name;
+                url = parentMenu.Name;
             }
             else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start(@"chrome.exe", url);
+                url = System.Configuration.ConfigurationManager.AppSettings[parentMenu.Tag.ToString()];
+            return url;
+        }
+        private void OpenInChrome(object sender, EventArgs e)
+        {
+            //var n = ((MenuItem)sender).Parent.Name;
+            //var url = "";
+            //if (n.Equals("CustomLink") || n.Equals("Bookmark"))
+            //{
+            //    url = ((MenuItem)sender).Parent.Tag.ToString();
+            //}
+            //else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
+            //{
+            //    url = ((MenuItem)sender).Parent.Name;
+            //}
+            //else
+            //    url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
+            var p = Process.Start(@"chrome.exe", FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void OpenInChromeIncognito(object sender, EventArgs e)
         {
-            var n = ((MenuItem)sender).Parent.Name;
-            var url = "";
-            if (n.Equals("CustomLink"))
-            {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
-                
-            }
-            else if(((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
-            {
-                url = ((MenuItem)sender).Parent.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-
-
-            var p = Process.Start(@"chrome.exe", "--incognito "+ url);
+            var p = Process.Start(@"chrome.exe", "--incognito "+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void OpenInIE(object sender, EventArgs e)
         {
-            var n = ((MenuItem)sender).Parent.Name;
-            var url = "";
-            if (n.Equals("CustomLink"))
-            {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
-            }
-            else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
-            {
-                url = ((MenuItem)sender).Parent.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start(@"IExplore.exe", url);
+            var p = Process.Start(@"IExplore.exe", FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void OpenInIEInPrivate(object sender, EventArgs e)
         {
-            var n = ((MenuItem)sender).Parent.Name;
-            var url = "";
-            if (n.Equals("CustomLink"))
-            {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
-            }
-            else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
-            {
-                url = ((MenuItem)sender).Parent.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start(@"IExplore.exe", "-private "+ url);
+            var p = Process.Start(@"IExplore.exe", "-private "+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void OpenInFF(object sender, EventArgs e)
         {
-            var n = ((MenuItem)sender).Parent.Name;
-            var url = "";
-            if (n.Equals("CustomLink"))
-            {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
-            }
-            else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
-            {
-                url = ((MenuItem)sender).Parent.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start(@"firefox.exe", url);
+            var p = Process.Start(@"firefox.exe", FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void OpenInFFInPrivate(object sender, EventArgs e)
         {
-            var n = ((MenuItem)sender).Parent.Name;
-            var url = "";
-            if (n.Equals("CustomLink"))
-            {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
-            }
-            else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
-            {
-                url = ((MenuItem)sender).Parent.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start(@"firefox.exe", "-private-window "+ url);
+            var p = Process.Start(@"firefox.exe", "-private-window "+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void OpenInEdge(object sender, EventArgs e)
         {
-            var n = ((MenuItem)sender).Parent.Name;
-            var url = "";
-            if (n.Equals("CustomLink"))
-            {
-                url = ((MenuItem)sender).Parent.Tag.ToString();
-            }
-            else if (((MenuItem)sender).Parent.ToString().Contains("SharePoint"))
-            {
-                url = ((MenuItem)sender).Parent.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
-            var p = Process.Start("microsoft-edge:"+ url);
+            var p = Process.Start("microsoft-edge:"+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
         }
         private void Item2_Click(object sender, EventArgs e)

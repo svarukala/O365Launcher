@@ -31,10 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LauncherConfig));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnRemoveTenant = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.btnDetect = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.btnAddTenant = new System.Windows.Forms.Button();
             this.txtFriendlyName = new System.Windows.Forms.TextBox();
             this.txtTenantPrefix = new System.Windows.Forms.TextBox();
@@ -73,7 +75,22 @@
             this.label5 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.btnRemoveTenant = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.comboBoxBkmGroup = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtLinkToAdd = new System.Windows.Forms.TextBox();
+            this.txtLinkName = new System.Windows.Forms.TextBox();
+            this.btnAddBkmLink = new System.Windows.Forms.Button();
+            this.btnRemoveLink = new System.Windows.Forms.Button();
+            this.listBoxBkmLinks = new System.Windows.Forms.ListBox();
+            this.txtNewGroupName = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.btnAddGroup = new System.Windows.Forms.Button();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -87,6 +104,9 @@
             this.tabPage4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -94,6 +114,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -116,6 +137,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tenants";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnRemoveTenant
+            // 
+            this.btnRemoveTenant.Location = new System.Drawing.Point(555, 215);
+            this.btnRemoveTenant.Name = "btnRemoveTenant";
+            this.btnRemoveTenant.Size = new System.Drawing.Size(183, 43);
+            this.btnRemoveTenant.TabIndex = 5;
+            this.btnRemoveTenant.Text = "Remove Tenant";
+            this.btnRemoveTenant.UseVisualStyleBackColor = true;
+            this.btnRemoveTenant.Click += new System.EventHandler(this.btnRemoveTenant_Click);
             // 
             // groupBox8
             // 
@@ -151,6 +182,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.btnAddTenant);
             this.groupBox1.Controls.Add(this.txtFriendlyName);
             this.groupBox1.Controls.Add(this.txtTenantPrefix);
@@ -163,9 +195,18 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add New Tenant";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(159, 80);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(412, 25);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "E.g. contoso (for contoso.sharepoint.com)";
+            // 
             // btnAddTenant
             // 
-            this.btnAddTenant.Location = new System.Drawing.Point(538, 147);
+            this.btnAddTenant.Location = new System.Drawing.Point(538, 151);
             this.btnAddTenant.Name = "btnAddTenant";
             this.btnAddTenant.Size = new System.Drawing.Size(183, 43);
             this.btnAddTenant.TabIndex = 4;
@@ -175,14 +216,14 @@
             // 
             // txtFriendlyName
             // 
-            this.txtFriendlyName.Location = new System.Drawing.Point(159, 95);
+            this.txtFriendlyName.Location = new System.Drawing.Point(159, 111);
             this.txtFriendlyName.Name = "txtFriendlyName";
             this.txtFriendlyName.Size = new System.Drawing.Size(562, 31);
             this.txtFriendlyName.TabIndex = 3;
             // 
             // txtTenantPrefix
             // 
-            this.txtTenantPrefix.Location = new System.Drawing.Point(159, 51);
+            this.txtTenantPrefix.Location = new System.Drawing.Point(159, 42);
             this.txtTenantPrefix.Name = "txtTenantPrefix";
             this.txtTenantPrefix.Size = new System.Drawing.Size(562, 31);
             this.txtTenantPrefix.TabIndex = 2;
@@ -190,7 +231,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 98);
+            this.label3.Location = new System.Drawing.Point(12, 114);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(151, 25);
             this.label3.TabIndex = 1;
@@ -199,7 +240,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 51);
+            this.label2.Location = new System.Drawing.Point(12, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(141, 25);
             this.label2.TabIndex = 0;
@@ -262,7 +303,7 @@
             this.groupBox7.Size = new System.Drawing.Size(737, 231);
             this.groupBox7.TabIndex = 6;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Custom Links";
+            this.groupBox7.Text = "Custom Links (specific to this tenant)";
             // 
             // label10
             // 
@@ -516,15 +557,164 @@
             // 
             this.saveFileDialog1.Title = "Export configruation to XML file";
             // 
-            // btnRemoveTenant
+            // tabPage5
             // 
-            this.btnRemoveTenant.Location = new System.Drawing.Point(555, 215);
-            this.btnRemoveTenant.Name = "btnRemoveTenant";
-            this.btnRemoveTenant.Size = new System.Drawing.Size(183, 43);
-            this.btnRemoveTenant.TabIndex = 5;
-            this.btnRemoveTenant.Text = "Remove Tenant";
-            this.btnRemoveTenant.UseVisualStyleBackColor = true;
-            this.btnRemoveTenant.Click += new System.EventHandler(this.btnRemoveTenant_Click);
+            this.tabPage5.Controls.Add(this.groupBox9);
+            this.tabPage5.Location = new System.Drawing.Point(8, 39);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(765, 677);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Bookmarks";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.groupBox10);
+            this.groupBox9.Controls.Add(this.btnAddGroup);
+            this.groupBox9.Controls.Add(this.label17);
+            this.groupBox9.Controls.Add(this.txtNewGroupName);
+            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox9.Location = new System.Drawing.Point(0, 0);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(765, 677);
+            this.groupBox9.TabIndex = 0;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Bookmarks";
+            // 
+            // comboBoxBkmGroup
+            // 
+            this.comboBoxBkmGroup.FormattingEnabled = true;
+            this.comboBoxBkmGroup.Items.AddRange(new object[] {
+            "g1",
+            "g2"});
+            this.comboBoxBkmGroup.Location = new System.Drawing.Point(171, 26);
+            this.comboBoxBkmGroup.Name = "comboBoxBkmGroup";
+            this.comboBoxBkmGroup.Size = new System.Drawing.Size(560, 33);
+            this.comboBoxBkmGroup.TabIndex = 1;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 205);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(131, 25);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Links Added";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 117);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(151, 25);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Friendly Name";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 78);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(118, 25);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "Link to add";
+            // 
+            // txtLinkToAdd
+            // 
+            this.txtLinkToAdd.Location = new System.Drawing.Point(171, 72);
+            this.txtLinkToAdd.Name = "txtLinkToAdd";
+            this.txtLinkToAdd.Size = new System.Drawing.Size(560, 31);
+            this.txtLinkToAdd.TabIndex = 6;
+            // 
+            // txtLinkName
+            // 
+            this.txtLinkName.Location = new System.Drawing.Point(171, 114);
+            this.txtLinkName.Name = "txtLinkName";
+            this.txtLinkName.Size = new System.Drawing.Size(560, 31);
+            this.txtLinkName.TabIndex = 7;
+            // 
+            // btnAddBkmLink
+            // 
+            this.btnAddBkmLink.Location = new System.Drawing.Point(599, 151);
+            this.btnAddBkmLink.Name = "btnAddBkmLink";
+            this.btnAddBkmLink.Size = new System.Drawing.Size(135, 44);
+            this.btnAddBkmLink.TabIndex = 8;
+            this.btnAddBkmLink.Text = "Add";
+            this.btnAddBkmLink.UseVisualStyleBackColor = true;
+            this.btnAddBkmLink.Click += new System.EventHandler(this.btnAddBkmLink_Click);
+            // 
+            // btnRemoveLink
+            // 
+            this.btnRemoveLink.Location = new System.Drawing.Point(600, 490);
+            this.btnRemoveLink.Name = "btnRemoveLink";
+            this.btnRemoveLink.Size = new System.Drawing.Size(135, 44);
+            this.btnRemoveLink.TabIndex = 9;
+            this.btnRemoveLink.Text = "Remove";
+            this.btnRemoveLink.UseVisualStyleBackColor = true;
+            this.btnRemoveLink.Click += new System.EventHandler(this.btnRemoveLink_Click);
+            // 
+            // listBoxBkmLinks
+            // 
+            this.listBoxBkmLinks.FormattingEnabled = true;
+            this.listBoxBkmLinks.ItemHeight = 25;
+            this.listBoxBkmLinks.Location = new System.Drawing.Point(171, 205);
+            this.listBoxBkmLinks.Name = "listBoxBkmLinks";
+            this.listBoxBkmLinks.Size = new System.Drawing.Size(560, 279);
+            this.listBoxBkmLinks.TabIndex = 10;
+            // 
+            // txtNewGroupName
+            // 
+            this.txtNewGroupName.Location = new System.Drawing.Point(185, 37);
+            this.txtNewGroupName.Name = "txtNewGroupName";
+            this.txtNewGroupName.Size = new System.Drawing.Size(419, 31);
+            this.txtNewGroupName.TabIndex = 11;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 37);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(156, 25);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "Add new group";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 34);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(133, 25);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "Select group";
+            // 
+            // btnAddGroup
+            // 
+            this.btnAddGroup.Location = new System.Drawing.Point(610, 34);
+            this.btnAddGroup.Name = "btnAddGroup";
+            this.btnAddGroup.Size = new System.Drawing.Size(135, 43);
+            this.btnAddGroup.TabIndex = 14;
+            this.btnAddGroup.Text = "Add Group";
+            this.btnAddGroup.UseVisualStyleBackColor = true;
+            this.btnAddGroup.Click += new System.EventHandler(this.btnAddGroup_Click);
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.label18);
+            this.groupBox10.Controls.Add(this.label16);
+            this.groupBox10.Controls.Add(this.label15);
+            this.groupBox10.Controls.Add(this.comboBoxBkmGroup);
+            this.groupBox10.Controls.Add(this.btnRemoveLink);
+            this.groupBox10.Controls.Add(this.listBoxBkmLinks);
+            this.groupBox10.Controls.Add(this.txtLinkToAdd);
+            this.groupBox10.Controls.Add(this.txtLinkName);
+            this.groupBox10.Controls.Add(this.label14);
+            this.groupBox10.Controls.Add(this.btnAddBkmLink);
+            this.groupBox10.Location = new System.Drawing.Point(10, 102);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(749, 554);
+            this.groupBox10.TabIndex = 15;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Add/Remove bookmarks";
             // 
             // LauncherConfig
             // 
@@ -557,6 +747,11 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -608,5 +803,22 @@
         private System.Windows.Forms.Button btnDetect;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnRemoveTenant;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.ComboBox comboBoxBkmGroup;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnRemoveLink;
+        private System.Windows.Forms.Button btnAddBkmLink;
+        private System.Windows.Forms.TextBox txtLinkName;
+        private System.Windows.Forms.TextBox txtLinkToAdd;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ListBox listBoxBkmLinks;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtNewGroupName;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Button btnAddGroup;
     }
 }

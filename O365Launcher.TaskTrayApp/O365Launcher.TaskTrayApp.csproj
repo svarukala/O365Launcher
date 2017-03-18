@@ -129,6 +129,7 @@
     <Compile Include="LauncherConfig.Designer.cs">
       <DependentUpon>LauncherConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\BookmarkInfo.cs" />
     <Compile Include="Model\LauncherEnums.cs" />
     <Compile Include="Model\LauncherProfile.cs" />
     <Compile Include="Model\QuickLinks.cs" />
