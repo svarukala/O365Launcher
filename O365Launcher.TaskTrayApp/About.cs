@@ -39,7 +39,7 @@ namespace O365Launcher.TaskTrayApp
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("mailto:svarukala@gmail.com");
+            System.Diagnostics.Process.Start("mailto:svarukal@microsoft.com");
         }
     }
 }

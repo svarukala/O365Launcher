@@ -119,18 +119,18 @@
   </resheader>
   <data name="label1.Text" xml:space="preserve">
     <value>Purpose: 
-We keep logging into multiple O365 tenants on daily basis. We have to juggle with multiple browsers, logins and inprivate/inconginto mode to keep active sessions on multiple tenants or same tenant with different logins. This tool helps you to ease this problem to some extent. It acts as an App Launcher providing a way to choose a tenant and a browser mode when opening the pages. This tool also acts as a bookmark manager avoiding multiple hops to reach to an admin center or a specific page/site collection.
+To put it in simple words, this tool is a bookmark manager irrespective of the browser that you are using. To expand mode: We keep logging into multiple O365 tenants on daily basis. We have to juggle with multiple browsers, logins and inprivate/inconginto mode to keep active sessions on multiple tenants or same tenant with different logins. This tool helps you to ease this problem to some extent. It acts as an App Launcher providing a way to choose a tenant and a browser mode when opening the pages. This tool also acts as a bookmark manager avoiding multiple hops to reach to an admin center or a specific page/site collection.
 
 Privacy:
-This tool doesn't collect any type of information from your machine or from Office 365 tenants that you add. Note that you are just providing the tenant name and not the credentials.
+This tool doesn't collect any type of personally identifiable information from your machine or from Office 365 tenants that you add. It collects some telemetry data to measure the usage of this tool.
 
 Future enhancements:
 a. Support user logins if possible (still researching feasibility)
-b. Support On-Premises links
+b. Support importing bookmarks from browser to this tool
 c. Support auto-detection of tenants for IE, Edge and Firefox
 d. Convert this app to WPF or using Electron engine
 
-Thank you for trying this tool. Hopefully this helps you to be more productive. Please feel free to provide any feedback, improvements, complaints using the below link.</value>
+Thank you for trying this tool. Hopefully this helps you to be more productive. Please feel free to provide any feedback using the below link.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -12,6 +12,7 @@ using O365Launcher.TaskTrayApp.Model;
 using System.Net;
 using System.Data.SQLite;
 using System.Diagnostics;
+using Microsoft.ApplicationInsights;
 
 namespace O365Launcher.TaskTrayApp
 {
@@ -22,8 +23,20 @@ namespace O365Launcher.TaskTrayApp
         BindingSource bsBkmGroups = new BindingSource();
         BindingSource bsBkmLinks = new BindingSource();
         LauncherAppContext launcherCtx;
+        private TelemetryClient tc = new TelemetryClient();
+
         public LauncherConfig()
         {
+            tc.InstrumentationKey = "a4a0bc24-f0e2-4bc4-8226-de98a8b215d9";
+
+            // Set session data:
+            tc.Context.User.Id = Environment.MachineName;
+            tc.Context.Session.Id = Guid.NewGuid().ToString();
+            tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+
+            // Log a page view:
+            tc.TrackPageView("LauncherConfig");
+
             InitializeComponent();
         }
 
@@ -61,6 +74,7 @@ namespace O365Launcher.TaskTrayApp
                     CurrentProfile = LauncherProfile.LoadFromXML(text);
                     CurrentProfile.SaveConfiguration();
                     LoadProfile();
+                    tc.TrackEvent("ImportConfig");
                 }
                 catch (IOException)
                 {
@@ -83,6 +97,7 @@ namespace O365Launcher.TaskTrayApp
                 fs.Write(byteData,
                             0, byteData.Length);
                 fs.Dispose();
+                tc.TrackEvent("ExportConfig");
             }
         }
 
@@ -317,6 +332,7 @@ namespace O365Launcher.TaskTrayApp
                     currentProfile.Tenants.Add(new TenantInfo(tenantPrefix, tenantFriendlyName));
                     currentProfile.SaveConfiguration();
                     LoadProfile();
+                    tc.TrackMetric("TenantsAdded", currentProfile.Tenants.Count);
                 }
                 else
                     MessageBox.Show("Tenant name "+ tenantPrefix +" is invalid");
@@ -360,6 +376,7 @@ namespace O365Launcher.TaskTrayApp
                 currentProfile.SaveConfiguration();
                 MessageBox.Show("Successfully saved!");
                 LauncherCtx.BuildContextMenu();
+                tc.TrackEvent("BrowsersSave");
             }
             catch (Exception ex)
             {
@@ -424,6 +441,7 @@ namespace O365Launcher.TaskTrayApp
                     txtCustomLink.Clear();
                     txtCustomLinkName.Clear();
                     LauncherCtx.BuildContextMenu();
+                    tc.TrackMetric("TenantCustomLinks", currentTenant.CustomLinks.Count);
                 }
                 else
                     MessageBox.Show("Please provide valid url and name");
@@ -436,6 +454,7 @@ namespace O365Launcher.TaskTrayApp
 
         private void btnDetect_Click(object sender, EventArgs e)
         {
+            tc.TrackEvent("AutoDetectBrowser");
             if (!CheckIfBrowserRunning(LauncherEnums.BrowserType.Chrome))
             {
                 List<string> tenants = AutoDetectChromeHistory();
@@ -473,6 +492,7 @@ namespace O365Launcher.TaskTrayApp
 
         public static List<string> AutoDetectChromeHistory()
         {
+            //LauncherConfig.tc.TrackEvent("AutoDetectChromeHistory");
             //List<string> t = new List<string>();
             //t.Add("ten1");
             //t.Add("ten2");
@@ -578,6 +598,10 @@ namespace O365Launcher.TaskTrayApp
                     //PopulateListBoxBkmLinks();
                     bsBkmLinks.DataSource = bkmInfo.Links;
                     bsBkmLinks.ResetBindings(false);
+                    LauncherCtx.BuildContextMenu();
+                    tc.TrackMetric("BookmarksAdded", bkmInfo.Links.Count, 
+                        new Dictionary<string, string>() { { "BookmarkGroup", bkmInfo.GroupName } });
+                    
                 }
             }
         }

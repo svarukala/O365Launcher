@@ -39,7 +39,7 @@
             this.label1.Location = new System.Drawing.Point(17, 15);
             this.label1.MaximumSize = new System.Drawing.Size(800, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(800, 575);
+            this.label1.Size = new System.Drawing.Size(800, 600);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -47,7 +47,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(17, 594);
+            this.linkLabel1.Location = new System.Drawing.Point(17, 612);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(156, 25);
             this.linkLabel1.TabIndex = 1;

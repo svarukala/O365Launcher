@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 using O365Launcher.TaskTrayApp.Model;
+using Microsoft.ApplicationInsights;
 
 namespace O365Launcher.TaskTrayApp
 {
@@ -13,12 +14,23 @@ namespace O365Launcher.TaskTrayApp
         NotifyIcon notifyIcon = new NotifyIcon();
         LauncherConfig configWindow = new LauncherConfig();
         About abtWindow = new About();
+        private TelemetryClient tc = new TelemetryClient();
         public LauncherAppContext()
         {
+            tc.InstrumentationKey = "a4a0bc24-f0e2-4bc4-8226-de98a8b215d9";
+
+            // Set session data:
+            tc.Context.User.Id = Environment.MachineName;
+            tc.Context.Session.Id = Guid.NewGuid().ToString();
+            tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
             
+            // Log a page view:
+            tc.TrackPageView("LauncherAppContext");
+
+
             LauncherConfig config = new LauncherConfig();
             configWindow.LauncherCtx = this;
-            //config.LauncherCtx = this;
+            //config.LauncherCtx = this;aaaaaxcz
             BuildContextMenu();
         }
 
@@ -60,18 +72,25 @@ namespace O365Launcher.TaskTrayApp
                 tenantMenuItem.MenuItems.Add(customLinksMenuItem);
                 menu.MenuItems.Add(tenantMenuItem); //, new EventHandler(Exit)));
             }
-            foreach (var bkmInfo in configWindow.CurrentProfile.Bookmarks)
+            //Add Bookmarks menu only if user added any bookmarks
+            if (configWindow.CurrentProfile.Bookmarks.Count > 0)
             {
-                MenuItem bkmMenuItem = new MenuItem(bkmInfo.GroupName);
-                foreach (var link in bkmInfo.Links)
+                MenuItem bookmarkMenuItem = new MenuItem("Bookmarks");
+                foreach (var bkmInfo in configWindow.CurrentProfile.Bookmarks)
                 {
-                    MenuItem linkMenuItem = new MenuItem(link.Value);
-                    linkMenuItem.Name = "Bookmark";
-                    linkMenuItem.Tag = link.Key;
-                    AddBrowserMenuItems(linkMenuItem, configWindow);
-                    bkmMenuItem.MenuItems.Add(linkMenuItem);
+                    MenuItem bkmMenuItem = new MenuItem(bkmInfo.GroupName);
+                    foreach (var link in bkmInfo.Links)
+                    {
+                        MenuItem linkMenuItem = new MenuItem(link.Value);
+                        linkMenuItem.Name = "Bookmark";
+                        linkMenuItem.Tag = link.Key;
+                        AddBrowserMenuItems(linkMenuItem, configWindow);
+                        bkmMenuItem.MenuItems.Add(linkMenuItem);
+                    }
+                    bookmarkMenuItem.MenuItems.Add(bkmMenuItem);
+                    //menu.MenuItems.Add(bkmMenuItem);
                 }
-                menu.MenuItems.Add(bkmMenuItem);
+                menu.MenuItems.Add(bookmarkMenuItem);
             }
             menu.MenuItems.Add(new MenuItem("Configuration", new EventHandler(ShowConfig)));
             menu.MenuItems.Add(new MenuItem("About", new EventHandler(ShowAbout)));
@@ -143,31 +162,41 @@ namespace O365Launcher.TaskTrayApp
             //    url = System.Configuration.ConfigurationManager.AppSettings[((MenuItem)sender).Parent.Tag.ToString()];
             var p = Process.Start(@"chrome.exe", FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
+
+            tc.TrackEvent(LauncherEnums.BrowserType.Chrome.ToString());
+            //,
+              //                      new Dictionary<string, string>() { { "zip", zip } },
+                //                    new Dictionary<string, double>() { { "duration", timer.ElapsedMilliseconds } });
         }
         private void OpenInChromeIncognito(object sender, EventArgs e)
         {
             var p = Process.Start(@"chrome.exe", "--incognito "+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
+            tc.TrackEvent(LauncherEnums.BrowserType.Chrome.ToString()+ " InPrivate");
         }
         private void OpenInIE(object sender, EventArgs e)
         {
             var p = Process.Start(@"IExplore.exe", FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
+            tc.TrackEvent(LauncherEnums.BrowserType.IExplorer.ToString());
         }
         private void OpenInIEInPrivate(object sender, EventArgs e)
         {
             var p = Process.Start(@"IExplore.exe", "-private "+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
+            tc.TrackEvent(LauncherEnums.BrowserType.IExplorer.ToString() + " InPrivate");
         }
         private void OpenInFF(object sender, EventArgs e)
         {
             var p = Process.Start(@"firefox.exe", FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
+            tc.TrackEvent(LauncherEnums.BrowserType.Firefox.ToString());
         }
         private void OpenInFFInPrivate(object sender, EventArgs e)
         {
             var p = Process.Start(@"firefox.exe", "-private-window "+ FindMenuItemUrl(((MenuItem)sender).Parent));
             p.Dispose();
+            tc.TrackEvent(LauncherEnums.BrowserType.Firefox.ToString() + " InPrivate");
         }
         private void OpenInEdge(object sender, EventArgs e)
         {

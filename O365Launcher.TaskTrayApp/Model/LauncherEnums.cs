@@ -12,8 +12,9 @@ namespace O365Launcher.TaskTrayApp.Model
         {
             Chrome,
             IExplorer,
-            Firefox,
-            Safari
+            Firefox
+                //,
+            //Safari
         }
 
         public enum QuickLinksGroup
