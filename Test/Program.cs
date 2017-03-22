@@ -13,6 +13,7 @@ namespace Test
 {
     class Program
     {
+        //private TelemetryClient tc = new TelemetryClient();
         static void Main(string[] args)
         {
             GetChromeHistory();
@@ -65,8 +66,10 @@ namespace Test
                 List<string> tenants = new List<string>();
                 var tempUrl = string.Empty;
                 var tenantUrl = string.Empty;
+                System.Text.StringBuilder sb = new StringBuilder();
                 while (dr.Read())
                 {
+                    sb.Append(dr[1].ToString());
                     tempUrl = dr[1].ToString();
                     if ((tempUrl.Contains(".sharepoint.com")))
                     {

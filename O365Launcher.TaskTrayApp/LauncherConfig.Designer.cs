@@ -728,6 +728,7 @@
             this.Name = "LauncherConfig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LauncherConfig_FormClosing);
             this.Load += new System.EventHandler(this.LauncherConfig_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

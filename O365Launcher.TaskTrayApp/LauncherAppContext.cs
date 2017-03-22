@@ -17,7 +17,8 @@ namespace O365Launcher.TaskTrayApp
         private TelemetryClient tc = new TelemetryClient();
         public LauncherAppContext()
         {
-            tc.InstrumentationKey = "a4a0bc24-f0e2-4bc4-8226-de98a8b215d9";
+            tc.InstrumentationKey = "dc41fcc7-bc20-4b9a-bb0a-bf4815df949c";
+                //"a4a0bc24-f0e2-4bc4-8226-de98a8b215d9";
 
             // Set session data:
             tc.Context.User.Id = Environment.MachineName;
@@ -257,7 +258,13 @@ namespace O365Launcher.TaskTrayApp
             // We must manually tidy up and remove the icon before we exit.
             // Otherwise it will be left behind until the user mouses over.
             notifyIcon.Visible = false;
+            if (tc != null)
+            {
+                tc.Flush(); // only for desktop apps
 
+                // Allow time for flushing:
+                System.Threading.Thread.Sleep(500);
+            }
             Application.Exit();
         }
     }

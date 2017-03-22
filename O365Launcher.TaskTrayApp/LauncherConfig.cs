@@ -27,7 +27,7 @@ namespace O365Launcher.TaskTrayApp
 
         public LauncherConfig()
         {
-            tc.InstrumentationKey = "a4a0bc24-f0e2-4bc4-8226-de98a8b215d9";
+            tc.InstrumentationKey = "dc41fcc7-bc20-4b9a-bb0a-bf4815df949c";
 
             // Set session data:
             tc.Context.User.Id = Environment.MachineName;
@@ -130,19 +130,21 @@ namespace O365Launcher.TaskTrayApp
 
 
                 TenantInfo currentTenant = currentProfile.Tenants.Find(x => x.TenantPrefix == comboBoxTenants.SelectedValue.ToString());
+                if (currentTenant != null)
+                {
+                    bs.DataSource = currentTenant.CustomLinks;
+                    comboBoxCustomLinks.DataSource = bs;
+                    comboBoxCustomLinks.DisplayMember = "Value";
+                    comboBoxCustomLinks.ValueMember = "Key";
 
-                bs.DataSource = currentTenant.CustomLinks;
-                comboBoxCustomLinks.DataSource = bs;
-                comboBoxCustomLinks.DisplayMember = "Value";
-                comboBoxCustomLinks.ValueMember = "Key";
+                    bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
+                    comboBoxBkmGroup.DataSource = bsBkmGroups;//currentProfile.Bookmarks;
+                    comboBoxBkmGroup.DisplayMember = "GroupName";
+                    comboBoxBkmGroup.ValueMember = "GroupName";
+                    comboBoxBkmGroup.SelectedIndexChanged += ComboBoxBkmGroup_SelectedIndexChanged;
 
-                bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
-                comboBoxBkmGroup.DataSource = bsBkmGroups;//currentProfile.Bookmarks;
-                comboBoxBkmGroup.DisplayMember = "GroupName";
-                comboBoxBkmGroup.ValueMember = "GroupName";
-                comboBoxBkmGroup.SelectedIndexChanged += ComboBoxBkmGroup_SelectedIndexChanged;
-
-                SelectCheckedListBoxItems(currentTenant);
+                    SelectCheckedListBoxItems(currentTenant);
+                }
                 #region
                 //int count = checkedListBoxBrowsers.Items.Count;
                 //for (int i = 0; i < count; i++)
@@ -332,6 +334,7 @@ namespace O365Launcher.TaskTrayApp
                     currentProfile.Tenants.Add(new TenantInfo(tenantPrefix, tenantFriendlyName));
                     currentProfile.SaveConfiguration();
                     LoadProfile();
+                    LauncherCtx.BuildContextMenu();
                     tc.TrackMetric("TenantsAdded", currentProfile.Tenants.Count);
                 }
                 else
@@ -565,11 +568,12 @@ namespace O365Launcher.TaskTrayApp
                 currentProfile.Tenants.Remove(currentTenant); //.Add(new TenantInfo(txtTenantPrefix.Text, txtFriendlyName.Text));
                 currentProfile.SaveConfiguration();
                 LoadProfile();
+                LauncherCtx.BuildContextMenu();
                 MessageBox.Show("Removed tenant successfully!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to add. Error: " + ex.ToString());
+                MessageBox.Show("Failed to remove tenant. Error: " + ex.ToString());
             }
         }
 
@@ -612,6 +616,7 @@ namespace O365Launcher.TaskTrayApp
             CurrentProfile.Bookmarks.Add(bkmInfo);
             CurrentProfile.SaveConfiguration();
             LoadProfile();
+            LauncherCtx.BuildContextMenu();
             //return 
         }
 
@@ -645,6 +650,17 @@ namespace O365Launcher.TaskTrayApp
                 LoadProfile();
                 bsBkmLinks.DataSource = bkmInfo.Links;
                 bsBkmLinks.ResetBindings(false);
+            }
+        }
+
+        private void LauncherConfig_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (tc != null)
+            {
+                tc.Flush(); // only for desktop apps
+
+                // Allow time for flushing:
+                System.Threading.Thread.Sleep(1000);
             }
         }
     }
