@@ -66,7 +66,7 @@ namespace O365Launcher.TaskTrayApp
             if (result == DialogResult.OK) // Test result.
             {
                 string file = openFileDialog1.FileName;
-                lblImportFile.Text = "File selected: "+ file;
+                //lblImportFile.Text = "File selected: "+ file;
                 try
                 {
                     string text = File.ReadAllText(file);
@@ -74,6 +74,7 @@ namespace O365Launcher.TaskTrayApp
                     CurrentProfile = LauncherProfile.LoadFromXML(text);
                     CurrentProfile.SaveConfiguration();
                     LoadProfile();
+                    MessageBox.Show("Imported successfully!");
                     tc.TrackEvent("ImportConfig");
                 }
                 catch (IOException)
@@ -292,7 +293,7 @@ namespace O365Launcher.TaskTrayApp
                 {
                     txtFriendlyName.Text = string.IsNullOrEmpty(txtFriendlyName.Text) ? txtTenantPrefix.Text : txtFriendlyName.Text;
                     AddTenant(txtTenantPrefix.Text, txtFriendlyName.Text);
-                    MessageBox.Show("Added tenant successfully!");
+                    //MessageBox.Show("Added tenant successfully!");
                     txtTenantPrefix.Clear();
                     txtFriendlyName.Clear();
                 }
@@ -323,7 +324,7 @@ namespace O365Launcher.TaskTrayApp
             {
                 AddTenant(tenantPrefix, tenantPrefix);
             }
-            MessageBox.Show("Done!");
+            //MessageBox.Show("Done!");
         }
         private void AddTenant(string tenantPrefix, string tenantFriendlyName)
         {
@@ -440,9 +441,10 @@ namespace O365Launcher.TaskTrayApp
                     currentTenant.CustomLinks.Add(kvPair);
                     currentProfile.SaveConfiguration();
                     bs.ResetBindings(false);
-                    MessageBox.Show("Successfully added!");
+                    //MessageBox.Show("Successfully added!");
                     txtCustomLink.Clear();
                     txtCustomLinkName.Clear();
+                    comboBoxCustomLinks.SelectedIndex = comboBoxCustomLinks.Items.Count - 1;
                     LauncherCtx.BuildContextMenu();
                     tc.TrackMetric("TenantCustomLinks", currentTenant.CustomLinks.Count);
                 }
@@ -630,9 +632,15 @@ namespace O365Launcher.TaskTrayApp
             {
                 AddBkmGroup(txtNewGroupName.Text.Trim());
                 txtNewGroupName.Clear();
-                MessageBox.Show("Added the group");
-                bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
-                bsBkmGroups.ResetBindings(false);
+                //MessageBox.Show("Added the group");
+                LoadProfile();
+
+                //currentProfile.Bookmarks.Find(x => x.GroupName == comboBoxBkmGroup.SelectedValue.ToString());
+
+                comboBoxBkmGroup.SelectedIndex = comboBoxBkmGroup.Items.Count-1;
+                LauncherCtx.BuildContextMenu();
+                //bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
+                //bsBkmGroups.ResetBindings(false);
             }
         }
 
@@ -660,7 +668,7 @@ namespace O365Launcher.TaskTrayApp
                 tc.Flush(); // only for desktop apps
 
                 // Allow time for flushing:
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(500);
             }
         }
     }

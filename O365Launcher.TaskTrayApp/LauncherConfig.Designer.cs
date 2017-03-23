@@ -555,6 +555,7 @@
             // 
             // comboBoxBkmGroup
             // 
+            this.comboBoxBkmGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxBkmGroup.FormattingEnabled = true;
             this.comboBoxBkmGroup.Items.AddRange(new object[] {
             "g1",

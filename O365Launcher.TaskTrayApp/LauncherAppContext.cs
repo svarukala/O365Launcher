@@ -263,7 +263,7 @@ namespace O365Launcher.TaskTrayApp
                 tc.Flush(); // only for desktop apps
 
                 // Allow time for flushing:
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(1000);
             }
             Application.Exit();
         }
