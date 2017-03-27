@@ -36,10 +36,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 15);
+            this.label1.Location = new System.Drawing.Point(27, 45);
             this.label1.MaximumSize = new System.Drawing.Size(800, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(800, 600);
+            this.label1.Size = new System.Drawing.Size(798, 575);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -47,7 +47,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(17, 612);
+            this.linkLabel1.Location = new System.Drawing.Point(27, 656);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(156, 25);
             this.linkLabel1.TabIndex = 1;
@@ -59,7 +59,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(815, 643);
+            this.ClientSize = new System.Drawing.Size(860, 729);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

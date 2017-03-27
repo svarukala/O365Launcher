@@ -119,7 +119,7 @@
   </resheader>
   <data name="label1.Text" xml:space="preserve">
     <value>Purpose: 
-To put it in simple words, this tool is a bookmark manager irrespective of the browser that you are using. To expand mode: We keep logging into multiple O365 tenants on daily basis. We have to juggle with multiple browsers, logins and inprivate/inconginto mode to keep active sessions on multiple tenants or same tenant with different logins. This tool helps you to ease this problem to some extent. It acts as an App Launcher providing a way to choose a tenant and a browser mode when opening the pages. This tool also acts as a bookmark manager avoiding multiple hops to reach to an admin center or a specific page/site collection.
+To put it in simple words, this tool is a bookmark manager irrespective of the browser that you are using. We keep logging into multiple O365 tenants on daily basis. We have to juggle with multiple browsers, logins and inprivate/inconginto mode to keep active sessions on multiple tenants or same tenant with different logins. This tool helps you to ease this problem to some extent. It acts as an App Launcher providing a way to choose a tenant and a browser mode when opening the pages. This tool also acts as a bookmark manager avoiding multiple hops to reach to an admin center or a specific page/site collection.
 
 Privacy:
 This tool doesn't collect any type of personally identifiable information from your machine or from Office 365 tenants that you add. It collects some telemetry data to measure the usage of this tool.
