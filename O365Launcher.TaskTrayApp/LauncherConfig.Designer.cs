@@ -55,6 +55,8 @@
             this.txtCustomLink = new System.Windows.Forms.TextBox();
             this.comboBoxCustomLinks = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAdminLinks = new System.Windows.Forms.CheckBox();
+            this.checkBoxFreqLinks = new System.Windows.Forms.CheckBox();
             this.btnSaveTenantLinks = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -368,21 +370,43 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.checkBoxAdminLinks);
+            this.groupBox6.Controls.Add(this.checkBoxFreqLinks);
             this.groupBox6.Controls.Add(this.btnSaveTenantLinks);
             this.groupBox6.Controls.Add(this.label7);
             this.groupBox6.Controls.Add(this.label6);
             this.groupBox6.Controls.Add(this.checkedListBoxAdminCenters);
             this.groupBox6.Controls.Add(this.checkedListBoxFUL);
-            this.groupBox6.Location = new System.Drawing.Point(6, 88);
+            this.groupBox6.Location = new System.Drawing.Point(6, 80);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(737, 334);
+            this.groupBox6.Size = new System.Drawing.Size(737, 342);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Tenant Links";
             // 
+            // checkBoxAdminLinks
+            // 
+            this.checkBoxAdminLinks.AutoSize = true;
+            this.checkBoxAdminLinks.Location = new System.Drawing.Point(14, 33);
+            this.checkBoxAdminLinks.Name = "checkBoxAdminLinks";
+            this.checkBoxAdminLinks.Size = new System.Drawing.Size(28, 27);
+            this.checkBoxAdminLinks.TabIndex = 8;
+            this.checkBoxAdminLinks.UseVisualStyleBackColor = true;
+            this.checkBoxAdminLinks.CheckedChanged += new System.EventHandler(this.checkBoxAdminLinks_CheckedChanged);
+            // 
+            // checkBoxFreqLinks
+            // 
+            this.checkBoxFreqLinks.AutoSize = true;
+            this.checkBoxFreqLinks.Location = new System.Drawing.Point(407, 30);
+            this.checkBoxFreqLinks.Name = "checkBoxFreqLinks";
+            this.checkBoxFreqLinks.Size = new System.Drawing.Size(28, 27);
+            this.checkBoxFreqLinks.TabIndex = 7;
+            this.checkBoxFreqLinks.UseVisualStyleBackColor = true;
+            this.checkBoxFreqLinks.CheckedChanged += new System.EventHandler(this.checkBoxFreqLinks_CheckedChanged);
+            // 
             // btnSaveTenantLinks
             // 
-            this.btnSaveTenantLinks.Location = new System.Drawing.Point(577, 287);
+            this.btnSaveTenantLinks.Location = new System.Drawing.Point(577, 289);
             this.btnSaveTenantLinks.Name = "btnSaveTenantLinks";
             this.btnSaveTenantLinks.Size = new System.Drawing.Size(142, 41);
             this.btnSaveTenantLinks.TabIndex = 6;
@@ -393,7 +417,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(402, 27);
+            this.label7.Location = new System.Drawing.Point(441, 33);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(175, 25);
             this.label7.TabIndex = 5;
@@ -402,7 +426,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 27);
+            this.label6.Location = new System.Drawing.Point(48, 35);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(153, 25);
             this.label6.TabIndex = 4;
@@ -411,7 +435,7 @@
             // checkedListBoxAdminCenters
             // 
             this.checkedListBoxAdminCenters.FormattingEnabled = true;
-            this.checkedListBoxAdminCenters.Location = new System.Drawing.Point(14, 62);
+            this.checkedListBoxAdminCenters.Location = new System.Drawing.Point(14, 68);
             this.checkedListBoxAdminCenters.Name = "checkedListBoxAdminCenters";
             this.checkedListBoxAdminCenters.Size = new System.Drawing.Size(307, 212);
             this.checkedListBoxAdminCenters.TabIndex = 2;
@@ -419,7 +443,7 @@
             // checkedListBoxFUL
             // 
             this.checkedListBoxFUL.FormattingEnabled = true;
-            this.checkedListBoxFUL.Location = new System.Drawing.Point(407, 62);
+            this.checkedListBoxFUL.Location = new System.Drawing.Point(407, 68);
             this.checkedListBoxFUL.Name = "checkedListBoxFUL";
             this.checkedListBoxFUL.Size = new System.Drawing.Size(312, 212);
             this.checkedListBoxFUL.TabIndex = 3;
@@ -824,5 +848,7 @@
         private System.Windows.Forms.TextBox txtNewGroupName;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Button btnAddGroup;
+        private System.Windows.Forms.CheckBox checkBoxFreqLinks;
+        private System.Windows.Forms.CheckBox checkBoxAdminLinks;
     }
 }

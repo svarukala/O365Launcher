@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using O365Launcher.TaskTrayApp.Model;
 using Microsoft.ApplicationInsights;
+using System.Text.RegularExpressions;
 
 namespace O365Launcher.TaskTrayApp
 {
@@ -45,18 +46,25 @@ namespace O365Launcher.TaskTrayApp
                 MenuItem adminMenuItem = new MenuItem("AdminCenters");
                 MenuItem fLinksMenuItem = new MenuItem("FreqLinks");
                 MenuItem customLinksMenuItem = new MenuItem("CustomLinks");
+                string url = string.Empty;
                 foreach (var adminLink in tenant.AdminCenterLinks)
                 {
                     MenuItem admLinkMenuItem = new MenuItem(adminLink.ToString());
-                    admLinkMenuItem.Tag = adminLink.ToString();
-                    admLinkMenuItem.Name = adminLink.ToString().Equals("SharePoint") ? "https://" + tenant.TenantPrefix +"-admin.sharepoint.com" : "AdminLinks";
+                    url = System.Configuration.ConfigurationManager.AppSettings[adminLink.ToString()];
+                    admLinkMenuItem.Tag = ContainsFormatPlaceholders(url) ? string.Format(url, tenant.TenantPrefix) : url;
+                    //adminLink.ToString().Equals("SharePoint") ? "https://" + tenant.TenantPrefix + "-admin.sharepoint.com" : System.Configuration.ConfigurationManager.AppSettings[adminLink.ToString()];   //adminLink.ToString();
+                    admLinkMenuItem.Name = "AdminLinks";
+                        //adminLink.ToString().Equals("SharePoint") ? "https://" + tenant.TenantPrefix +"-admin.sharepoint.com" : "AdminLinks";
                     AddBrowserMenuItems(admLinkMenuItem, configWindow);
                     adminMenuItem.MenuItems.Add(admLinkMenuItem);
                 }
                 foreach (var fLink in tenant.FreqLinks)
                 {
                     MenuItem fLinkMenuItem = new MenuItem(fLink.ToString());
-                    fLinkMenuItem.Tag = fLink.ToString();
+                    url = System.Configuration.ConfigurationManager.AppSettings[fLink.ToString()];
+                    fLinkMenuItem.Tag = ContainsFormatPlaceholders(url) ? string.Format(url, tenant.TenantPrefix) : url;
+                    //fLink.ToString();
+                    fLinkMenuItem.Name = "FreqLinks";
                     AddBrowserMenuItems(fLinkMenuItem, configWindow);
                     fLinksMenuItem.MenuItems.Add(fLinkMenuItem);
                 }
@@ -64,7 +72,7 @@ namespace O365Launcher.TaskTrayApp
                 {
                     MenuItem cLinkMenuItem = new MenuItem(string.IsNullOrEmpty(cLink.Value) ? "blank" : cLink.Value);
                     cLinkMenuItem.Tag = string.IsNullOrEmpty(cLink.Key) ? "blank" : cLink.Key;
-                    cLinkMenuItem.Name = "CustomLink";
+                    cLinkMenuItem.Name = "CustomLinks";
                     AddBrowserMenuItems(cLinkMenuItem, configWindow);
                     customLinksMenuItem.MenuItems.Add(cLinkMenuItem);
                 }
@@ -134,19 +142,35 @@ namespace O365Launcher.TaskTrayApp
 
         private string FindMenuItemUrl(Menu parentMenu)
         {
-            var url = "";
-            if (parentMenu.Name.Equals("CustomLink") || parentMenu.Name.Equals("Bookmark"))
-            {
-                url = parentMenu.Tag.ToString();
-            }
-            else if (parentMenu.ToString().Contains("SharePoint"))
-            {
-                url = parentMenu.Name;
-            }
-            else
-                url = System.Configuration.ConfigurationManager.AppSettings[parentMenu.Tag.ToString()];
-            return url;
+            return parentMenu.Tag.ToString();
+            //var url = "";
+            //if (parentMenu.Name.Equals("CustomLink") || parentMenu.Name.Equals("Bookmark"))
+            //{
+            //    url = parentMenu.Tag.ToString();
+            //}
+            //else if (parentMenu.ToString().Contains("SharePoint"))
+            //{
+            //    url = parentMenu.Name;
+            //}
+            //else
+            //    url = System.Configuration.ConfigurationManager.AppSettings[parentMenu.Tag.ToString()];
+            //return url;
         }
+
+        public static bool ContainsFormatPlaceholders(string inputText)
+        {
+            var matches = Regex.Matches(inputText, @"(?<!\{)\{([0-9]+).*?\}(?!})");
+            return matches.Count > 0 ? true : false;
+            //int count = 0;
+            //if (matches.Count > 0)
+            //{
+            //    count = matches.Cast<Match>().Max(m => int.Parse(m.Groups[1].Value)) + 1;
+            //    return count > 0 ? true : false;
+            //}
+            //return false;
+            //Console.WteLine("Count {0}", count);
+        }
+
         private void OpenInChrome(object sender, EventArgs e)
         {
             //var n = ((MenuItem)sender).Parent.Name;

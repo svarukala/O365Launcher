@@ -8,6 +8,7 @@ using O365Launcher.TaskTrayApp;
 using System.Net;
 using System.Data.SQLite;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Test
 {
@@ -16,11 +17,16 @@ namespace Test
         //private TelemetryClient tc = new TelemetryClient();
         static void Main(string[] args)
         {
-            GetChromeHistory();
-            //Console.WriteLine(Program.IsTenantValid("https://login.windows.net/mod362201.onmicrosoft.com/FederationMetadata/2007-06/FederationMetadata.xml"));
+            string str = "sdl{0}sdksld";
+            Console.WriteLine(string.Format(str, 111));
+            //DoesContainFormatPlaceholders("sdl{0}sdksld");
+            
+            
 
             Console.Read();
             return;
+            GetChromeHistory();
+            Console.WriteLine(Program.IsTenantValid("https://login.windows.net/mod362201.onmicrosoft.com/FederationMetadata/2007-06/FederationMetadata.xml"));
             LauncherProfile profile = new LauncherProfile();
             profile.Browsers.Add(LauncherEnums.BrowserType.Chrome);
             profile.Browsers.Add(LauncherEnums.BrowserType.IExplorer);
@@ -34,6 +40,14 @@ namespace Test
             Console.Read();
         }
 
+        public static void DoesContainFormatPlaceholders(string inputText)
+        {
+            var matches = Regex.Matches(inputText, @"(?<!\{)\{([0-9]+).*?\}(?!})");
+            int count = 0;
+            if (matches.Count > 0)
+                count = matches.Cast<Match>().Max(m => int.Parse(m.Groups[1].Value)) + 1;
+            Console.WriteLine("Count {0}", count);
+        }
         public static void GetChromeHistory()
         {
             // Get Current Users App Data

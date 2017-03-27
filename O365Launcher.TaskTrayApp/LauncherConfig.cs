@@ -13,6 +13,7 @@ using System.Net;
 using System.Data.SQLite;
 using System.Diagnostics;
 using Microsoft.ApplicationInsights;
+using System.Text.RegularExpressions;
 
 namespace O365Launcher.TaskTrayApp
 {
@@ -118,7 +119,17 @@ namespace O365Launcher.TaskTrayApp
             }
             else
             {
-                currentProfile = LauncherProfile.LoadFromXML(currentConfig);
+                try
+                {
+                    currentProfile = LauncherProfile.LoadFromXML(currentConfig);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error loading the profile. Loading empty profile.");
+                    currentProfile = new LauncherProfile();
+                    SelectCheckedListBoxItems(null);
+                    return;
+                }
 
                 listBoxTenants.DataSource = currentProfile.Tenants;
                 listBoxTenants.DisplayMember = "TenantFriendlyName";
@@ -364,6 +375,7 @@ namespace O365Launcher.TaskTrayApp
             }
             return true;
         }
+
 
 
         private void btnSaveBrowsers_Click(object sender, EventArgs e)
@@ -670,6 +682,24 @@ namespace O365Launcher.TaskTrayApp
                 // Allow time for flushing:
                 System.Threading.Thread.Sleep(500);
             }
+        }
+
+        private void checkBoxAdminLinks_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectAllCheckedListBoxItems(checkedListBoxAdminCenters);
+        }
+
+        private void SelectAllCheckedListBoxItems(CheckedListBox checkedListBox)
+        {
+            for (var i = 0; i < checkedListBox.Items.Count; i++)
+            {
+                checkedListBox.SetItemChecked(i, true);
+            }
+        }
+
+        private void checkBoxFreqLinks_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectAllCheckedListBoxItems(checkedListBoxFUL);
         }
     }
 }

@@ -28,11 +28,11 @@ namespace O365Launcher.TaskTrayApp.Model
             AdminHome,
             Exchange,
             Skype,
-            SharePoint,
-            OneDrive,
-            Yammer,
-            PowerApps,
-            Flow,
+            SharePointAdmin,
+            OneDriveAdmin,
+            YammerAdmin,
+            PowerAppsAdmin,
+            FlowAdmin,
             Compliance
         }
 
@@ -43,7 +43,27 @@ namespace O365Launcher.TaskTrayApp.Model
             ServiceHealth,
             MessageCenter,
             UsageReports,
-            ServicesAddins
+            ServicesAddins,
+            Mail,
+            Calendar,
+            People,
+            Yammer,
+            PowerApps,
+            Flow,
+            Sway,
+            OneDrive,
+            SharePoint,
+            Newsfeed,
+            Planner,
+            Tasks,
+            PowerBI,
+            Delve,
+            Video,
+            Word,
+            Excel,
+            PowerPoint,
+            OneNote,
+            Dynamics
         }
     }
 }
