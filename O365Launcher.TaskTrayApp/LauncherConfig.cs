@@ -148,14 +148,15 @@ namespace O365Launcher.TaskTrayApp
                     comboBoxCustomLinks.DataSource = bs;
                     comboBoxCustomLinks.DisplayMember = "Value";
                     comboBoxCustomLinks.ValueMember = "Key";
-
+                    SelectCheckedListBoxItems(currentTenant);
+                }
+                if (CurrentProfile.Bookmarks.Count > 0)
+                {
                     bsBkmGroups.DataSource = CurrentProfile.Bookmarks;
                     comboBoxBkmGroup.DataSource = bsBkmGroups;//currentProfile.Bookmarks;
                     comboBoxBkmGroup.DisplayMember = "GroupName";
                     comboBoxBkmGroup.ValueMember = "GroupName";
                     comboBoxBkmGroup.SelectedIndexChanged += ComboBoxBkmGroup_SelectedIndexChanged;
-
-                    SelectCheckedListBoxItems(currentTenant);
                 }
                 #region
                 //int count = checkedListBoxBrowsers.Items.Count;
@@ -612,10 +613,11 @@ namespace O365Launcher.TaskTrayApp
                     CurrentProfile.SaveConfiguration();
                     txtLinkName.Clear();
                     txtLinkToAdd.Clear();
-                    LoadProfile();
-                    //PopulateListBoxBkmLinks();
                     bsBkmLinks.DataSource = bkmInfo.Links;
                     bsBkmLinks.ResetBindings(false);
+                    LoadProfile();
+                    if(comboBoxBkmGroup.Items.Count == 1)
+                        PopulateListBoxBkmLinks();
                     LauncherCtx.BuildContextMenu();
                     tc.TrackMetric("BookmarksAdded", bkmInfo.Links.Count, 
                         new Dictionary<string, string>() { { "BookmarkGroup", bkmInfo.GroupName } });

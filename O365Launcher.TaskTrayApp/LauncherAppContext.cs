@@ -22,6 +22,7 @@ namespace O365Launcher.TaskTrayApp
                 //"a4a0bc24-f0e2-4bc4-8226-de98a8b215d9";
 
             // Set session data:
+            //Re-thinking about using MachineName as the userid. I hope MahcineName is not okay (not PII)
             tc.Context.User.Id = Environment.MachineName;
             tc.Context.Session.Id = Guid.NewGuid().ToString();
             tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
